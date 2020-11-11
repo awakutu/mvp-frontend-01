@@ -1,3 +1,3 @@
 # MVP-Frontend-01
 
-Frontend Co -Create
+Apabila melakukan update atau add file di repo ini tolong dengan membuat cabang terlebih dahulu sebelum push.
