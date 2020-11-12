@@ -1,8 +1,34 @@
+import { useState, useEffect } from "react";
+import Axios from "axios";
 import "../components/profileStyle.css";
 import headerIMG from "../components/profileIMG.jpg";
 import iconIMG from "../components/profileIcon.svg";
 
 export default function Profile() {
+  const url = "http://3.15.137.94:8040/api/register/";
+
+  const [CategoryList, setCategory] = useState([]);
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
+
+  function submit(e) {
+    e.preventDefault();
+    Axios.post(url, data).then((res) => {
+      console.log(res.data)
+      const mydata =[...CategoryList,res.data]
+      setCategory(mydata)
+    });
+  }
+
+  function handle(e) {
+    const newdata = { ...data };
+    newdata[e.target.id] = e.target.value;
+    setData(newdata);
+  }
+
   return (
     <>
       <header className="jumbotron">
@@ -36,16 +62,18 @@ export default function Profile() {
             ></img>
           </div>
           <div className="col-md-6 py-5">
-            <form>
+            <form onSubmit={(e)=>submit(e)}>
               <div className="form-group row">
                 <label for="inputNama" className="col-sm-5 col-form-label">
                   Nama
                 </label>
                 <div class="col-sm-7">
                   <input
+                    onChange={(e) => handle(e)}
+                    value={data.username}
                     type="text"
                     className="form-control input-profile"
-                    id="nama"
+                    id="username"
                     placeholder="Masukkan nama"
                   />
                 </div>
@@ -56,6 +84,7 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
+                    //  onChange={(e)=>handle(e)}
                     type="text"
                     className="form-control input-profile"
                     id="noHP"
@@ -69,6 +98,7 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
+                    //  onChange={(e)=>handle(e)}
                     type="text"
                     className="form-control input-profile"
                     id="TTL"
@@ -82,6 +112,7 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
+                    //  onChange={(e)=>handle(e)}
                     type="text"
                     className="form-control input-profile"
                     id="emailLama"
@@ -95,9 +126,11 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
+                    onChange={(e) => handle(e)}
+                    value={data.email}
                     type="text"
                     className="form-control input-profile"
-                    id="emailBaru"
+                    id="email"
                     placeholder="Masukkan Email Baru"
                   />
                 </div>
@@ -108,7 +141,8 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
-                    type="text"
+                    //  onChange={(e)=>handle(e)}
+                    type="password"
                     className="form-control input-profile"
                     id="sandiLama"
                     placeholder="Masukkan Sandi Lama"
@@ -121,9 +155,12 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
-                    type="text"
+                    onChange={(e) => handle(e)}
+                    value={data.password}
+                    type="password"
+                    name="password"
                     className="form-control input-profile"
-                    id="sandiBaru"
+                    id="password"
                     placeholder="Masukkan Sandi Baru"
                   />
                 </div>
@@ -137,7 +174,7 @@ export default function Profile() {
                 </label>
                 <div class="col-sm-7">
                   <input
-                    type="text"
+                    type="password"
                     className="form-control input-profile"
                     id="konfirmasiSandi"
                     placeholder="Masukkan Kembali Sandi Baru"
@@ -146,7 +183,8 @@ export default function Profile() {
               </div>
             </form>
             <div className="d-flex justify-content-end ">
-              <button type="button" class="btn btn-info button-tags d-md-table">
+              <button  onClick={(e)=>submit(e)}
+               className="btn btn-info button-tags d-md-table">
                 Perbarui
               </button>
             </div>
