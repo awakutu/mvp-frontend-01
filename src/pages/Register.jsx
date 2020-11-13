@@ -10,7 +10,7 @@ import axios from 'axios';
 
 
 function Register() {
-  const [username, setUsername] = useState("");
+  const [Username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -26,7 +26,7 @@ function Register() {
         "Content-Type": "application/json",
       },
     };
-    axios.post('http://3.15.137.94:8084/api/register', { username, email, password }, config).then(response => {
+    axios.post('http://3.15.137.94:8084/api/register', { Username, email, password }, config).then(response => {
       setLoading(false);
       console.log(response.data);
       history.push('/Login');
@@ -53,11 +53,11 @@ function Register() {
               <div className="Login">
                 <h1 className="text-center font-weight-bold">Registrasi</h1>
                 <form onSubmit={onSubmit}>
-                  <FormGroup controlId="username">
+                  <FormGroup controlId="Username">
                     <FormControl
                       autoFocus
-                      type="username"
-                      value={username}
+                      type="Username"
+                      value={Username}
                       onChange={e => setUsername(e.target.value)}
                       placeholder="Username"
                     />

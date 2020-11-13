@@ -10,7 +10,7 @@ import axios from 'axios';
 import { setUserSession } from '../utils/Common';
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ function Login() {
           "Content-Type": "application/json",
         },
       };
-    axios.post('http://3.15.137.94:8084/api/login', { username, password }, config).then(response => {
+    axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
       setLoading(false);
       setUserSession(response.data.token);
       
@@ -50,12 +50,12 @@ function Login() {
               <div className="Login">
                 <h1 className="text-center font-weight-bold">Login</h1>
                 <form onSubmit={onSubmit}>
-                  <FormGroup controlId="username">
+                  <FormGroup controlId="name">
                     <FormControl
                       autoFocus
-                      type="username"
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}
+                      type="name"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
                       placeholder="Username"
                     />
                   </FormGroup>
