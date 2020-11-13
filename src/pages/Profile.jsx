@@ -1,8 +1,34 @@
+import { useState, useEffect } from "react";
+import Axios from "axios";
+import ApiService from "../services/MVP-Api";
 import "../components/profileStyle.css";
 import headerIMG from "../components/profileIMG.jpg";
 import iconIMG from "../components/profileIcon.svg";
 
 export default function Profile() {
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
+  const [list, setList] = useState([]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setData({ ...data, [name]: value });
+  };
+
+  const saveData = () => {
+    ApiService.postRegister(data)
+      .then((response) => {
+        const newUser = [...list, response.data];
+        setList(newUser);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <>
       <header className="jumbotron">
@@ -38,115 +64,149 @@ export default function Profile() {
           <div className="col-md-6 py-5">
             <form>
               <div className="form-group row">
-                <label for="inputNama" className="col-sm-5 col-form-label">
+                <label htmlFor="inputNama" className="col-sm-5 col-form-label">
                   Nama
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
+                    onChange={handleInputChange}
+                    value={data.username}
                     type="text"
                     className="form-control input-profile"
-                    id="nama"
+                    id="username"
+                    name="username"
                     placeholder="Masukkan nama"
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label for="inputNoHP" className="col-sm-5 col-form-label">
+                <label htmlFor="inputNoHP" className="col-sm-5 col-form-label">
                   No Hp.
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
+                    //  onChange={(e)=>handle(e)}
                     type="text"
                     className="form-control input-profile"
                     id="noHP"
+                    name=""
                     placeholder="Masukkan No Hp."
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label for="inputTTL" className="col-sm-5 col-form-label">
+                <label htmlFor="inputTTL" className="col-sm-5 col-form-label">
                   Tempat, Tanggal Lahir
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
+                    //  onChange={(e)=>handle(e)}
                     type="text"
                     className="form-control input-profile"
                     id="TTL"
+                    name=""
                     placeholder="Masukkan Tempat, Tanggal Lahir."
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label for="inputEmailLama" className="col-sm-5 col-form-label">
+                <label
+                  htmlFor="inputEmailLama"
+                  className="col-sm-5 col-form-label"
+                >
                   Email Lama
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
+                    //  onChange={(e)=>handle(e)}
                     type="text"
                     className="form-control input-profile"
                     id="emailLama"
+                    name=""
                     placeholder="Masukkan Email Lama"
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label for="inputEmailBaru" className="col-sm-5 col-form-label">
+                <label
+                  htmlFor="inputEmailBaru"
+                  className="col-sm-5 col-form-label"
+                >
                   Email Baru
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
+                    onChange={handleInputChange}
+                    value={data.email}
                     type="text"
                     className="form-control input-profile"
-                    id="emailBaru"
+                    id="email"
+                    name="email"
                     placeholder="Masukkan Email Baru"
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label for="inputSandiLama" className="col-sm-5 col-form-label">
+                <label
+                  htmlFor="inputSandiLama"
+                  className="col-sm-5 col-form-label"
+                >
                   Sandi Lama
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
-                    type="text"
+                    //  onChange={(e)=>handle(e)}
+                    type="password"
                     className="form-control input-profile"
                     id="sandiLama"
+                    name=""
                     placeholder="Masukkan Sandi Lama"
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label for="inputSandiBaru" className="col-sm-5 col-form-label">
+                <label
+                  htmlFor="inputSandiBaru"
+                  className="col-sm-5 col-form-label"
+                >
                   Sandi Baru
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
-                    type="text"
+                    onChange={handleInputChange}
+                    value={data.password}
+                    type="password"
+                    name="password"
                     className="form-control input-profile"
-                    id="sandiBaru"
+                    id="password"
+                    name="password"
                     placeholder="Masukkan Sandi Baru"
                   />
                 </div>
               </div>
               <div className="form-group row">
                 <label
-                  for="inputKonfirmasi"
+                  htmlFor="inputKonfirmasi"
                   className="col-sm-5 col-form-label"
                 >
                   Konfirmasi Sandi Baru
                 </label>
-                <div class="col-sm-7">
+                <div className="col-sm-7">
                   <input
-                    type="text"
+                    type="password"
                     className="form-control input-profile"
                     id="konfirmasiSandi"
+                    name=""
                     placeholder="Masukkan Kembali Sandi Baru"
                   />
                 </div>
               </div>
             </form>
             <div className="d-flex justify-content-end ">
-              <button type="button" class="btn btn-info button-tags d-md-table">
+              <button
+                onClick={saveData}
+                className="btn btn-info button-tags d-md-table"
+              >
                 Perbarui
               </button>
             </div>
@@ -156,3 +216,4 @@ export default function Profile() {
     </>
   );
 }
+
