@@ -13,7 +13,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={Profile} />{" "}
         {/*Ganti component halaman regis*/}
-        <Route path="/Register" component={Register} />{" "}
+        <PublicRoute path="/Register" component={Register} />{" "}
         {/*Ganti component halaman verifikasi*/}
         <Route path="/Verifikasi" component={Registrasi} />{" "}
         {/*Ganti component halaman verifikasi*/}
