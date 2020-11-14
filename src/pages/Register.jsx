@@ -6,8 +6,7 @@ import login from '../components/login.png';
 import fb from '../components/fb.png';
 import google from '../components/google.png';
 import twitter from '../components/twitter.png';
-import axios from 'axios';
-
+import API from "../services/MVP-Api";
 
 function Register() {
   const [Username, setUsername] = useState("");
@@ -21,12 +20,14 @@ function Register() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    axios.post('http://3.15.137.94:8084/api/register', { Username, email, password }, config).then(response => {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
+
+    // axios.post('http://3.15.137.94:8084/api/register', { Username, email, password }, config).then(response => {
+    API.postRegister(Username,email,password).then(response => {  
       setLoading(false);
       console.log(response.data);
       history.push('/Login');

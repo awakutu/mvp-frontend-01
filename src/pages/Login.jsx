@@ -6,8 +6,8 @@ import login from '../components/login.png';
 import fb from '../components/fb.png';
 import google from '../components/google.png';
 import twitter from '../components/twitter.png';
-import axios from 'axios';
 import { setUserSession } from '../utils/Common';
+import API from "../services/MVP-Api";
 
 function Login() {
   const [name, setName] = useState("");
@@ -20,12 +20,16 @@ function Login() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-    axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
+    // const config = {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   };
+
+    // hit api, bisa pakai kode dibawah
+    // axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
+    // atau 
+    API.postLogin(name,password).then(response => {
       setLoading(false);
       setUserSession(response.data.token);
       
