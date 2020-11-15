@@ -17,13 +17,13 @@ const deleteImage = () => {
 };
 
 // Register User
-const postRegister = () => {
-  return http.post("/register");
+const postRegister = (Username,email,password) => {
+  return http.post("/register", {Username,email,password});
 };
 
 // Login User
-const postLogin = () => {
-  return http.post("/login");
+const postLogin = (name,password) => {
+  return http.post("/login", {name,password});
 };
 
 // Edit profile user berdasarkan id
