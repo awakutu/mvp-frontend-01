@@ -4,7 +4,7 @@ import "./style.css";
 function Admin() {
     return (
         <div>
-            
+            Ini halaman Admin
         </div>
     )
 }

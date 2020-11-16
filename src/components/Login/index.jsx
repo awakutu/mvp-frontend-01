@@ -47,10 +47,12 @@ function Login() {
   }
 
   return (
-        <div className="container-fluid">
+        <div className="container">
           <div className="row align-items-center">
-            
-            <div className="col-md-6" >
+            <div className="col-md-6">
+              <Image className="img-fluid my-3" src={login}></Image>
+            </div>
+            <div className="col-md-6 " >
               <div className="Login">
                 <h1 className="text-center font-weight-bold">Login</h1>
                 <form onSubmit={onSubmit}>
@@ -99,10 +101,6 @@ function Login() {
                   </div>
                 </form>
               </div>
-            </div>
-
-            <div className="col-md-6 bg-color">
-              <Image className="img-fluid" src={login}></Image>
             </div>
           </div>
         </div>
