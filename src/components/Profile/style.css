@@ -1,5 +1,5 @@
 .jumbotron {
-  background: url(./profileHeader.jpg) no-repeat;
+  background: url(../../assets/profileHeader.jpg) no-repeat;
   background-size: cover;
   height: 8rem;
 }

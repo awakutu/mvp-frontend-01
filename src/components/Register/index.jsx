@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, Image } from "react-bootstrap";
-import '../components/authStyle.css';
 import { useHistory } from "react-router-dom";
-import login from '../components/login.png';
-import fb from '../components/fb.png';
-import google from '../components/google.png';
-import twitter from '../components/twitter.png';
-import API from "../services/MVP-Api";
+import login from '../../assets/login.png';
+import fb from '../../assets/fb.png';
+import google from '../../assets/google.png';
+import twitter from '../../assets/twitter.png';
+import API from "../../services/MVP-Api";
+import './style.css';
 
 function Register() {
   const [Username, setUsername] = useState("");

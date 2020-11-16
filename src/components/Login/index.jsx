@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Button, FormGroup, FormControl, Image } from "react-bootstrap";
-import '../components/authStyle.css';
 import { useHistory } from "react-router-dom";
-import login from '../components/login.png';
-import fb from '../components/fb.png';
-import google from '../components/google.png';
-import twitter from '../components/twitter.png';
-import { setUserSession } from '../utils/Common';
-import API from "../services/MVP-Api";
+import login from '../../assets/login.png';
+import fb from '../../assets/fb.png';
+import google from '../../assets/google.png';
+import twitter from '../../assets/twitter.png';
+import { setUserSession } from '../../utils/Common';
+import API from "../../services/MVP-Api";
+import "./style.css";
 
 function Login() {
-  const [name, setName] = useState("");
+  const [Username, setUserame] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ function Login() {
     // hit api, bisa pakai kode dibawah
     // axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
     // atau 
-    API.postLogin(name,password).then(response => {
+    API.postLogin(Username,password).then(response => {
       setLoading(false);
       setUserSession(response.data.token);
       
@@ -54,12 +54,12 @@ function Login() {
               <div className="Login">
                 <h1 className="text-center font-weight-bold">Login</h1>
                 <form onSubmit={onSubmit}>
-                  <FormGroup controlId="name">
+                  <FormGroup controlId="username">
                     <FormControl
                       autoFocus
-                      type="name"
-                      value={name}
-                      onChange={e => setName(e.target.value)}
+                      type="username"
+                      value={Username}
+                      onChange={e => setUserame(e.target.value)}
                       placeholder="Username"
                     />
                   </FormGroup>

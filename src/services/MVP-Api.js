@@ -22,8 +22,8 @@ const postRegister = (Username,email,password) => {
 };
 
 // Login User
-const postLogin = (name,password) => {
-  return http.post("/login", {name,password});
+const postLogin = (Username,password) => {
+  return http.post("/login", {Username,password});
 };
 
 // Edit profile user berdasarkan id

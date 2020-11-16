@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import Axios from "axios";
-import ApiService from "../services/MVP-Api";
-import "../components/profileStyle.css";
-import headerIMG from "../components/profileIMG.jpg";
-import iconIMG from "../components/profileIcon.svg";
+import ApiService from "../../services/MVP-Api";
+import headerIMG from "../../assets/profileIMG.jpg";
+import iconIMG from "../../assets/profileIcon.svg";
+import "./style.css";
 
 export default function Profile() {
   const [data, setData] = useState({
