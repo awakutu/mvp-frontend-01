@@ -68,7 +68,7 @@ function Dashboard() {
               </a>
             </div>
           </div>
-          <div className="col-sm-6 ">
+          <div className="col-sm-6 h-scroll">
             <div className="d-flex mt-2">
               <button type="button" className="btn button-tags">
                 All
