@@ -33,6 +33,7 @@ function Login() {
     API.postLogin(Username,password).then(response => {
       setLoading(false);
       setUserSession(response.data.token);
+      console.log(response.data);
       history.push('/PrefCategory');
       console.log("Berhasil Login")
     }).catch(error => {

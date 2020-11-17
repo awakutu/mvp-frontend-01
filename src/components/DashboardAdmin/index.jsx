@@ -15,9 +15,7 @@ function DashboardAdmin() {
     // console.log(token);
     // console.log({token});
     const [members, setMembers] = useState([]);
-    const [ID, setID] = useState([]);
-    const [Username, setUsername] = useState("");
-    const [Status, setStatus] = useState();
+    const [ID, setID] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -37,8 +35,8 @@ function DashboardAdmin() {
     axios.get("http://3.15.137.94:8084/api/admin/listuser", config)
     .then(response => setMembers(response.data.data.Data));
     
-    function onSubmit(e) {
-      e.preventDefault();
+    function Action(id) {
+     
       setError(null);
       setLoading(true);
       const config = {
@@ -47,12 +45,11 @@ function DashboardAdmin() {
             Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiIn0.-CmeD9djX3ZzMWQ6kmE_W11Cbk1ZmZCSqtl_bgk_GNU"
           },
         };
-        console.log(Username)
-        // console.log(Boolean({Status}))
-      axios.post('http://3.15.137.94:8084/api/admin/updateuser', {Username, Status}, config).then(response => {
+        console.log(ID)
+      axios.post('http://3.15.137.94:8084/api/admin/updateuser', [{ID: id}], config).then(response => {
         console.log(response.data);
         history.push('/DashboardAdmin');  
-        console.log("Berhasil Update")
+        console.log("Berhasil Approve")
       }).catch(error => {
         setLoading(false);
         console.log("Gagal Login")
@@ -168,7 +165,8 @@ function DashboardAdmin() {
                   <th>Nama</th>
                   <th>Email</th>
                   <th>Nomor HP</th>
-                  <th className="text-center">Status</th>
+                  {/* <th className="text-center">Status</th> */}
+                  <th className="text-center">Opsi</th>
                 </tr>
               </thead>
               <tbody>
@@ -179,9 +177,14 @@ function DashboardAdmin() {
                   <td>{member.email}</td>
                   <td>{member.phone}</td>
                   
-                  <td className="text-center">
+                  {/* <td className="text-center">
                   <button type="button"  className={((member.Status) == true )? "btn btn-primary rounded-pill text-center" : "btn btn-danger rounded-pill text-center"} data-toggle="button" aria-pressed="false" autocomplete="off">
                   {((member.Status) == true )? "Approved" : "Rejected"}
+                  </button>
+                  </td> */}
+                  <td className="text-center">
+                  <button type="button"  onClick={() => Action(member.ID)} className="btn btn-primary rounded-pill text-center" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    Approve
                   </button>
                   </td>
                   

@@ -7,6 +7,7 @@ import google from '../../assets/google.png';
 import twitter from '../../assets/twitter.png';
 import API from "../../services/MVP-Api";
 import './style.css';
+import axios from 'axios';
 
 function Register() {
   const [Username, setUsername] = useState("");
@@ -20,11 +21,11 @@ function Register() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    // const config = {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
     // axios.post('http://3.15.137.94:8084/api/register', { Username, email, password }, config).then(response => {
     API.postRegister(Username,email,password).then(response => {  
@@ -34,11 +35,20 @@ function Register() {
       console.log("Berhasil Regis")
       
 
-    }).catch(error => {
+    }).then(
+      
+    axios.post('http://3.15.137.94:8084/api/verifikasi', {email}, config).then(response => {  
+      setLoading(false);
+      console.log(response.data);
+      // history.push('/Login');
+      console.log("Verifikasi Email Terkirim")      
+
+    }))
+    .catch(error => {
       setLoading(false);
       console.log("Gagal Regis")
-      if (error.response.status === 401) setError(error.response.data.message);
-      else setError("Something went wrong. Please try again later.");
+      // if (error.response.status === 401) setError(error.response.data.message);
+      // else setError("Something went wrong. Please try again later.");
     
     });
   }
