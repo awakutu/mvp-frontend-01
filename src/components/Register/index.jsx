@@ -45,7 +45,7 @@ function Register() {
 
 
   return (
-        <div className="container">
+        <div className="container mt-5">
           <div className="row align-items-center">
           <div className="col-md-6">
               <Image className="img-fluid my-3" src={login}></Image>
