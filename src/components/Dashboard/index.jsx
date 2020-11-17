@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import { removeUserSession } from "../../utils/Common";
 import { useHistory } from "react-router-dom";
 import "./style.css";
@@ -8,10 +8,21 @@ import headerIMG from "../../assets/profileIMG.jpg";
 
 function Dashboard() {
   const history = useHistory();
+  const [mode, setMode] = useState("view");
+
+  const handleSavePost = () => {
+    setMode("view");
+  };
+
+  const handleAddPost = () => {
+    setMode("edit");
+  };
+  
   const handleLogout = () => {
     removeUserSession();
     history.push("/Login");
   };
+
   return (
     <>
       <header className="container-fluid card">
@@ -89,10 +100,33 @@ function Dashboard() {
             <img className="w-100" src={Info} />
             <div className="d-flex justify-content-between">
               <h4 className="mt-2">All Categories</h4>
-              <button className="btn btn-createGroup mx-4 my-4">
+              <button className="btn btn-createGroup mx-4 my-4" onClick={mode === "view" ? handleAddPost : null}>
                 + Create Post
               </button>
             </div>
+            {mode === "view" ? (
+                null
+              ) : (
+                <div class="card w-100 my-2">
+              <div class="card-body">
+              <div className="row"> 
+              <div className="col-2">
+              <img className="img-dashboard mt-2" src={headerIMG} />
+              </div>
+
+              <div className="col-10">
+              <input className="form-control border-0" placeholder="Title" id="title"/>
+              <input className="form-control h-50 pb-5 pt-4" type="text" placeholder="Write Something"/>
+      <button className="btn btn-lg btn-change px-3 mt-3 d-flex ml-auto" onClick={mode === "view" ? handleAddPost : handleSavePost}>
+            {mode ==="view"? null:"Post"}
+          </button>
+              
+              </div>
+              </div>
+            </div>
+            </div>
+              )}
+            
             <div class="card w-100 my-2">
               <div class="card-body">
                 <div className="row">
