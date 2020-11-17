@@ -80,7 +80,7 @@ function Dashboard() {
             </div>
             <div className="d-flex">
               <i className="fa fa-users pt-4" aria-hidden="true"></i>
-              <a className="text-secondary" href="">
+              <a className="text-secondary" href="/Group">
                 <p className="pt-3 pl-2">Group</p>
               </a>
             </div>
