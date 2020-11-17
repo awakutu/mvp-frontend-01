@@ -8,8 +8,9 @@ import twitter from '../../assets/twitter.png';
 import { setUserSession } from '../../utils/Common';
 import API from "../../services/MVP-Api";
 import "./style.css";
+import axios from 'axios';
 
-function Login() {
+function LoginAdmin() {
   const [Username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -20,20 +21,19 @@ function Login() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    // const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   };
+    const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
     // hit api, bisa pakai kode dibawah
     // axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
     // atau
-     
-    API.postLogin(Username,password).then(response => {
-      setLoading(false);
+    
+    axios.post('http://3.15.137.94:8084/api/admin/login', { Username, password }, config).then(response => {
       setUserSession(response.data.token);
-      history.push('/PrefCategory');
+      history.push('/DashboardAdmin');  
       console.log("Berhasil Login")
     }).catch(error => {
       setLoading(false);
@@ -44,6 +44,45 @@ function Login() {
     });
   }
 
+  // function onSubmit(e) {
+  //   e.preventDefault();
+  //   setError(null);
+  //   setLoading(true);
+  //   const config = {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+
+  //   if (Username == "admin") {
+  //     axios.post('http://13.250.19.185:8084/api/admin/login', { Username, password }, config).then(response => {
+  //       setUserSession(response.data.token);
+  //       history.push('/Admin');  
+  //     }).catch(error => {
+  //       setLoading(false);
+  //       console.log("Gagal Login")
+  //       if (error.response.status === 401) setError(error.response.data.message);
+  //       else setError("Something went wrong. Please try again later.");
+      
+  //     });
+  //   } 
+  //   else {
+  //   API.postLogin(Username,password).then(response => {
+  //     setLoading(false);
+  //     setUserSession(response.data.token);
+
+  //     history.push('/Dashboard');   
+  //     console.log("Berhasil Login")
+  //   }).catch(error => {
+  //     setLoading(false);
+  //     console.log("Gagal Login")
+  //     if (error.response.status === 401) setError(error.response.data.message);
+  //     else setError("Something went wrong. Please try again later.");
+    
+  //   });  
+  //   }
+  // }
+
   return (
         <div className="container">
           <div className="row align-items-center">
@@ -52,7 +91,7 @@ function Login() {
             </div>
             <div className="col-md-6 " >
               <div className="Login">
-                <h1 className="text-center font-weight-bold">Login</h1>
+                <h1 className="text-center font-weight-bold">Login Admin</h1>
                 <form onSubmit={onSubmit}>
                   <FormGroup controlId="username">
                     <FormControl
@@ -79,7 +118,7 @@ function Login() {
                 <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Login</Button>
                   
                   
-                  <div className="text-center">
+                  {/* <div className="text-center">
                     <h5 className="text-center">Belum memiliki akun? <a href="/Register"> Buat akun </a></h5>
                     
                     <div className="row">
@@ -96,7 +135,7 @@ function Login() {
                     <a href="/register">
                         <Image className="img-fluid mx-2" src={twitter}></Image>
                     </a>
-                  </div>
+                  </div> */}
                 </form>
               </div>
             </div>
@@ -105,4 +144,4 @@ function Login() {
   );
 }
 
-export default Login
+export default LoginAdmin

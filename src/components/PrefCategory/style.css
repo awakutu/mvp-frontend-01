@@ -1,0 +1,15 @@
+@media all and (min-width: 480px) {
+    
+  body {
+    background-color: #ffffff;
+  }
+
+  .bg-card {
+    background-color: #096AAF;
+  }
+
+  .btn-category {
+    background-color: #075f9e;
+  }
+
+}

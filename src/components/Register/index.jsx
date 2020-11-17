@@ -86,13 +86,13 @@ function Register() {
                 <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Daftar</Button>
                   
                   
-                  <div class="text-center">
+                  <div className="text-center">
                     <h5 className="text-center">Sudah memiliki akun? <a href="/Login"> Login </a></h5>
                     
-                    <div class="row">
-                        <div class="col"><hr/></div>
-                        <div class="col-auto">Atau daftar dengan</div>
-                        <div class="col"><hr/></div>
+                    <div className="row">
+                        <div className="col"><hr/></div>
+                        <div className="col-auto">Atau daftar dengan</div>
+                        <div className="col"><hr/></div>
                     </div>
                     <a href="/register">
                         <Image className="img-fluid mx-2" src={fb}></Image>
