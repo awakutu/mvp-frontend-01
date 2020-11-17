@@ -1,0 +1,68 @@
+/* .has-search {
+    position: relative;
+  } untuk ujung kanan*/
+
+/* .has-search .form-control {
+    padding-right: 10.375rem;
+  } */
+
+.has-search .form-control-feedback {
+	position: absolute;
+	z-index: 2;
+	display: block;
+	width: 3.375rem;
+	height: 2.375rem;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	color: #aaa;
+}
+
+.btn-createGroup {
+	background-color: #096aaf;
+	font-size: 1.1rem;
+	color: white;
+}
+
+.img-dashboard {
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+}
+
+.left-Bar {
+	background-color: #f5f6fd;
+}
+
+.main-wrap {
+	height: 100vh;
+}
+
+.btn-tag {
+	display: inline-block;
+	border-radius: 3rem;
+	font-size: 0.8rem;
+	/* padding: 12px 4rem; */
+	background-color: white;
+	border-color: gray;
+	color: black;
+	margin: 0 0.2rem;
+}
+
+.btn-tag:hover {
+	background-color: #096aaf;
+	color: white;
+}
+
+.h-scroll {
+	height: calc(100vh - 110px);
+	overflow-y: scroll;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+html,
+.h-scroll {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
