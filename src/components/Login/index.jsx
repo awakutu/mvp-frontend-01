@@ -33,7 +33,7 @@ function Login() {
       setLoading(false);
       setUserSession(response.data.token);
       
-      history.push('/Dashboard');
+      history.push('/Profile');// Aku edit buat buka
       console.log("Berhasil Login")
       
 
