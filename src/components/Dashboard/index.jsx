@@ -8,6 +8,24 @@ import headerIMG from "../../assets/profileIMG.jpg";
 
 function Dashboard() {
   const history = useHistory();
+  const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const bulan = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+  const currenDate = new Date();
+  let today = hari[currenDate.getDay()];
+  let month = bulan[currenDate.getMonth()];
   const [mode, setMode] = useState("view");
 
   const handleSavePost = () => {
@@ -94,7 +112,7 @@ function Dashboard() {
                 Technology
               </button>
               <p className="ml-auto">
-                <span className="text-primary">Kamis</span>, 14 November 2020
+                <span className="text-primary">{today}</span>, {currenDate.getDate()} {month} {currenDate.getFullYear()}
               </p>
             </div>
             <img className="w-100" src={Info} />
@@ -108,8 +126,8 @@ function Dashboard() {
               </button>
             </div>
             {mode === "view" ? null : (
-              <div class="card w-100 my-2">
-                <div class="card-body">
+              <div class="card w-100 my-2 ">
+                <div class="card-body ">
                   <div className="row">
                     <div className="col-2">
                       <img className="img-dashboard mt-2" src={headerIMG} />
