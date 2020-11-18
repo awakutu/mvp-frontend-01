@@ -144,7 +144,7 @@ function Blacklist() {
                   </button>
                   </td> */}
                   <td className="text-center">
-                  <button type="button"  onClick={() => approve(member.ID)} className="btn btn-primary rounded-pill text-center" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <button type="button"  onClick={() => approve(member.ID)} className="btn btn-primary rounded-pill text-center btn-sm font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Approve
                   </button>
                   </td>

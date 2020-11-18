@@ -7,11 +7,14 @@ import { getToken } from '../../utils/Common';
 import '../../utils/Common';
 import Logo from "../../assets/icon.svg";
 import headerIMG from "../../assets/profileIMG.jpg";
+import "./style.css";
 
 function DashboardAdmin() {
     const [token, setToken] = useState(getToken());
     const [members, setMembers] = useState([]);
     const [ID, setID] = useState('');
+    const [check, setCheck] = useState([]);
+    const [arr, setArr] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -29,7 +32,7 @@ function DashboardAdmin() {
     axios.get("http://3.15.137.94:8084/api/admin/listuser", config)
     .then(response => setMembers(response.data.data.Data));
     
-    function approve(id) {
+    function singleApprove(id) {
       setError(null);
       setLoading(true);
       const config = {
@@ -38,8 +41,44 @@ function DashboardAdmin() {
             Authorization : token
           },
         };
-        console.log(ID)
       axios.post('http://3.15.137.94:8084/api/admin/updateuser', [{ID: id}], config).then(response => {
+        console.log(response.data);
+        history.push('/DashboardAdmin');  
+        console.log("Berhasil Approve")
+      }).catch(error => {
+        setLoading(false);
+        console.log("Gagal Login")
+        // if (error.response.status === 401) setError(error.response.data.message);
+        // else setError("Something went wrong. Please try again later.");
+      
+      });
+    }
+
+  function multiApprove(event) {
+      const target = event.target;
+      var value = target.value;
+      
+      if(target.checked){
+          check.push(+value); 
+      }else{
+          check.pop(+value);
+      }
+      
+  }
+
+  function submitMultiApprove(){
+      var lengCheckArr = check.length;
+      for (let i=0; i<lengCheckArr; i++) {
+        arr[i] = {ID: check[i]};
+      }
+      console.log(arr);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : token
+        },
+      };
+      axios.post('http://3.15.137.94:8084/api/admin/updateuser', arr, config).then(response => {
         console.log(response.data);
         history.push('/DashboardAdmin');  
         console.log("Berhasil Approve")
@@ -50,27 +89,14 @@ function DashboardAdmin() {
         else setError("Something went wrong. Please try again later.");
       
       });
-    }
+  }
     return (
         <div>
               <header className="container-fluid card">
                 <div className="row">
                   <span className="mx-4" />
                   <img src={Logo} alt="Logo" />
-                  <div className="form-group has-search pt-4 pl-4 w-50 mx-4">
-                    <span className="fa fa-search form-control-feedback" />
-                    <input
-                      type="text"
-                      className="form-control pl-5"
-                      placeholder="Search Articles and Collaboration"
-                    />
-                  </div>
-                  <button className="btn btn-createGroup mx-4 my-4">
-                    Create Group
-                  </button>
-                  <a href="/Profile">
-                    <img className="img-dashboard mt-2" src={headerIMG} />
-                  </a>
+                  
                 </div>
             </header>
 
@@ -118,6 +144,9 @@ function DashboardAdmin() {
             <h3 className="text-secondary font-weight-bold">Approval Management</h3>     
             
           </div>
+          <div class="form-row">
+              
+          </div>
           <div className="table-responsive">
             <table className="table table-sm">
               <thead className="bg-primary my-3">
@@ -127,10 +156,23 @@ function DashboardAdmin() {
                   <th>Email</th>
                   <th>Nomor HP</th>
                   {/* <th className="text-center">Status</th> */}
-                  <th className="text-center">Opsi</th>
+                  <th className="text-center">Single</th>
+                  <th className="text-center">Multi</th>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className="text-center">
+                    <button type="button" onClick={() => submitMultiApprove()} className="btn btn-sm btn-success rounded-pill text-center mx-2 font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
+                      Approve
+                    </button>
+                  </td>
+                </tr>
               {members.map((member)=>
                 <tr>
                   <td>{member.ID}</td>
@@ -143,12 +185,21 @@ function DashboardAdmin() {
                   </button>
                   </td> */}
                   <td className="text-center">
-                  <button type="button"  onClick={() => approve(member.ID)} className="btn btn-primary rounded-pill text-center mx-2" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <button type="button"  onClick={() => singleApprove(member.ID)} className="btn btn-sm btn-primary rounded-pill text-center mx-2 font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Approve
                   </button>
-                  <button type="button"  className="btn btn-danger rounded-pill text-center" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <button type="button"  className="btn btn-sm btn-danger rounded-pill text-center font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Reject
                   </button>
+                  </td>
+                  <td className="text-center">
+                  <form>
+                      <input
+                        name="multiapprove"
+                        value={member.ID}
+                        type="checkbox"
+                        onChange={multiApprove} />
+                  </form>
                   </td>
                 </tr>
                 )}

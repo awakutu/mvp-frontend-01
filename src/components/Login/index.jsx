@@ -42,8 +42,8 @@ function Login() {
     }).catch(error => {
       setLoading(false);
       console.log("Gagal Login")
-      if (error.response.status === 401) setError(error.response.data.message);
-      else setError("Something went wrong. Please try again later.");
+      // if (error.response.status === 401) setError(error.response.data.message);
+      // else setError("Something went wrong. Please try again later.");
     
     });
   }
