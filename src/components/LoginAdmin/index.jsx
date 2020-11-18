@@ -32,7 +32,7 @@ function LoginAdmin() {
     // atau
     
     axios.post('http://3.15.137.94:8084/api/admin/login', { Username, password }, config).then(response => {
-      setUserSession(response.data.token);
+      setUserSession(response.data.data.token);
       history.push('/DashboardAdmin');  
       console.log("Berhasil Login")
     }).catch(error => {

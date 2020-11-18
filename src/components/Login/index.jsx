@@ -12,6 +12,7 @@ import "./style.css";
 function Login() {
   const [Username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -32,10 +33,12 @@ function Login() {
      
     API.postLogin(Username,password).then(response => {
       setLoading(false);
-      setUserSession(response.data.token);
-      console.log(response.data);
+      console.log(response.data.data.token);
+      setUserSession(response.data.data.token);
+      
       history.push('/PrefCategory');
       console.log("Berhasil Login")
+      
     }).catch(error => {
       setLoading(false);
       console.log("Gagal Login")

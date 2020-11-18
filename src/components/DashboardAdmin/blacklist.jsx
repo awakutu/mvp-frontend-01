@@ -8,8 +8,10 @@ import '../../utils/Common';
 import Logo from "../../assets/icon.svg";
 import headerIMG from "../../assets/profileIMG.jpg";
 
-function DashboardAdmin() {
-    const [token, setToken] = useState(getToken());
+function Blacklist() {
+    // const [token, setToken] = useState(getToken()); 
+    // console.log(token);
+    // console.log({token});
     const [members, setMembers] = useState([]);
     const [ID, setID] = useState('');
     const [error, setError] = useState(null);
@@ -23,7 +25,7 @@ function DashboardAdmin() {
     const config = {
         headers: {
         "Content-Type": "application/json",
-        Authorization : token
+        Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiIn0.-CmeD9djX3ZzMWQ6kmE_W11Cbk1ZmZCSqtl_bgk_GNU"
         },
       };
     axios.get("http://3.15.137.94:8084/api/admin/listuser", config)
@@ -35,7 +37,7 @@ function DashboardAdmin() {
       const config = {
           headers: {
             "Content-Type": "application/json",
-            Authorization : token
+            Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiIn0.-CmeD9djX3ZzMWQ6kmE_W11Cbk1ZmZCSqtl_bgk_GNU"
           },
         };
         console.log(ID)
@@ -85,6 +87,7 @@ function DashboardAdmin() {
                 {" "}Dashboard <span className="sr-only">(current)</span>
                 </a>
               </li>
+
               <li className="nav-item">
                 <a className="nav-link" href="/DashboardAdmin">
                 <i className="fa fa-group pt-4" aria-hidden="true"></i>
@@ -97,7 +100,6 @@ function DashboardAdmin() {
                 {" "}Blacklist Users
                 </a>
               </li>
-
               <li className="nav-item">
                 <a className="nav-link" href="#" onClick={handleLogout}>
                 <i className="fa fa-sign-out pt-4" aria-hidden="true"></i>
@@ -112,16 +114,15 @@ function DashboardAdmin() {
         <main role="main" className="col-md-9 ml-sm-auto col-lg-9 px-4">
           <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 className="text-primary font-weight-bold">Admin Dashboard</h1>   
-            
           </div>
           <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-            <h3 className="text-secondary font-weight-bold">Approval Management</h3>     
+            <h3 className="text-secondary font-weight-bold">Blacklist Users</h3>     
             
           </div>
           <div className="table-responsive">
             <table className="table table-sm">
               <thead className="bg-primary my-3">
-                <tr className="text-light"  >
+                <tr className="text-light" >
                   <th>ID</th>
                   <th>Nama</th>
                   <th>Email</th>
@@ -143,11 +144,8 @@ function DashboardAdmin() {
                   </button>
                   </td> */}
                   <td className="text-center">
-                  <button type="button"  onClick={() => approve(member.ID)} className="btn btn-primary rounded-pill text-center mx-2" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <button type="button"  onClick={() => approve(member.ID)} className="btn btn-primary rounded-pill text-center" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Approve
-                  </button>
-                  <button type="button"  className="btn btn-danger rounded-pill text-center" data-toggle="button" aria-pressed="false" autocomplete="off">
-                    Reject
                   </button>
                   </td>
                 </tr>
@@ -165,4 +163,4 @@ function DashboardAdmin() {
     )
 }
 
-export default DashboardAdmin
+export default Blacklist
