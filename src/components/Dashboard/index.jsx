@@ -58,9 +58,22 @@ function Dashboard() {
           <button className="btn btn-createGroup mx-4 my-4">
             Create Group
           </button>
+          
+          <div className="dropdown" >
+          <img className="img-dashboard mt-2" src={headerIMG} />
+          <div className="dropdown-content">
           <a href="/Profile">
-            <img className="img-dashboard mt-2" src={headerIMG} />
+          Profile
           </a>
+          <a href="/Login" onClick={handleLogout} value="Login">
+          Logout
+          </a>
+          </div>
+          
+          </div>
+          
+       
+         
         </div>
       </header>
       <main className="container-fluid">
@@ -324,7 +337,7 @@ function Dashboard() {
                     +20 more
                   </button>
                 </div>
-                <input type="button" onClick={handleLogout} value="Logout" />
+                
               </div>
             </div>
           </div>
