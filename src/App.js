@@ -24,7 +24,7 @@ export default function App() {
 				<PublicRoute path="/Register" component={Register} />{' '}
 				<PublicRoute path="/Login" component={Login} />{' '}
 				<PublicRoute path="/LoginAdmin" component={LoginAdmin} />{' '}
-				<PrivateRoute path="/Verification" component={Verification} />{' '}
+				<PublicRoute path="/Verification" component={Verification} />{' '}
 				<PrivateRoute path="/Dashboard" component={Dashboard} />{' '}
 				<PrivateRoute path="/DashboardAdmin" component={DashboardAdmin} />{' '}
 				<PrivateRoute path="/Profile" component={Profile} />{' '}

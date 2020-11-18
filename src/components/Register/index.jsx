@@ -31,7 +31,6 @@ function Register() {
     API.postRegister(Username,email,password).then(response => {  
       setLoading(false);
       console.log(response.data);
-      history.push('/Login');
       console.log("Berhasil Regis")
       
 
@@ -40,7 +39,7 @@ function Register() {
     axios.post('http://3.15.137.94:8084/api/verifikasi', {email}, config).then(response => {  
       setLoading(false);
       console.log(response.data);
-      // history.push('/Login');
+      history.push('/Verification');
       console.log("Verifikasi Email Terkirim")      
 
     }))

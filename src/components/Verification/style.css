@@ -1,0 +1,23 @@
+@media all and (min-width: 480px) {
+
+.verif {
+    width: 500px;
+    height: 700px;
+    margin: auto;
+    background: #6AABDA;
+    position: relative;
+    animation: myfirst 5s;
+    animation-direction: alternate;
+    border-radius: 50px 0px 0px 0px;
+    opacity: 1;
+  }
+  
+  @keyframes myfirst {
+    0%  {background: #6AABDA; left: 200px; opacity: 0.2;}
+    75%  {background: #6AABDA; left: 0px; opacity: 1;}
+   
+  }
+  .bg-col {
+      background-color: #6AABDA;
+  }
+}
