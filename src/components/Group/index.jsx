@@ -74,7 +74,7 @@ function Group() {
 						<div className="row">
 							<div className="col-12">
 								<div className="d-flex flex-row justify-content-between">
-									<h4 className="mt-4">List Group</h4>
+									<h3 className="mt-4">List Group</h3>
 									<button className="btn btn-createGroup mt-4">
 										Create Group
 									</button>
@@ -86,7 +86,7 @@ function Group() {
 										<div className="row">
 											<div className="col-10">
 												<h4 class="card-title">
-													<a href="/DetailPost">Banking Social App</a>
+													<a href="/DetailGroup">Banking Social App</a>
 												</h4>
 												<div class="d-flex">
 													<div>Jumlah Anggota :</div>
@@ -109,7 +109,7 @@ function Group() {
 										<div className="row">
 											<div className="col-10">
 												<h4 class="card-title">
-													<a href="/DetailPost">Banking Social App</a>
+													<a href="/DetailGroup">Banking Social App</a>
 												</h4>
 												<div class="d-flex">
 													<div>Jumlah Anggota :</div>
@@ -134,7 +134,7 @@ function Group() {
 										<div className="row">
 											<div className="col-10">
 												<h4 class="card-title">
-													<a href="/DetailPost">Banking Social App</a>
+													<a href="/DetailGroup">Banking Social App</a>
 												</h4>
 												<div class="d-flex">
 													<div>Jumlah Anggota :</div>
@@ -158,7 +158,7 @@ function Group() {
 										<div className="row">
 											<div className="col-10">
 												<h4 class="card-title">
-													<a href="/DetailPost">Banking Social App</a>
+													<a href="/DetailGroup">Banking Social App</a>
 												</h4>
 												<div class="d-flex">
 													<div>Jumlah Anggota :</div>

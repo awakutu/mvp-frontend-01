@@ -11,6 +11,7 @@ import Verification from './components/Verification';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Group from './components/Group';
+import DetailGroup from './components/DetailGroup';
 import DashboardAdmin from './components/DashboardAdmin';
 import Blacklist from './components/DashboardAdmin/blacklist';
 import PrefCategory from './components/PrefCategory';
@@ -31,6 +32,7 @@ export default function App() {
 				<PrivateRoute path="/DashboardAdminBlacklist" component={Blacklist} />{' '}
 				<PrivateRoute path="/Profile" component={Profile} />{' '}
 				<PrivateRoute path="/Group" component={Group} />{' '}
+				<PrivateRoute path="/DetailGroup" component={DetailGroup} />{' '}
 				<PrivateRoute path="/PrefCategory" component={PrefCategory} />{' '}
 			</Switch>
 		</Router>
