@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from "../../assets/logo.png"
+import { getToken, getID, getUsername } from "../../utils/Common";
 import "./style.css"
+import axios from "axios";
 
 function PrefCategory() {
+
+    const[categories, setCategories] = useState([]);
+    const [token, setToken] = useState(getToken());
+    const [Username, setUsername] = useState(getUsername());
+    const config = {
+        headers: {
+        "Content-Type": "application/json",
+        Authorization : token
+        },
+      };
+    axios.get(`http://3.15.137.94:8084/api/pref/${Username}`, config)
+    .then(response => setCategories(response.data.data.Data));
+
+
     return (
         <div>
             <div className="container">
@@ -15,15 +31,26 @@ function PrefCategory() {
                         
                         <div className="card-body">
                             <h6 className="card-title">Kategori artikel apa yang kamu sukai?</h6>
-                            <button type="button" className="btn btn-category mx-2 my-2 text-light">Lifestyle</button>
-                            <button type="button" className="btn btn-category mx-2 my-2 text-light">Art</button>
-                            <button type="button" className="btn btn-category mx-2 my-2 text-light">Technology</button>
-                            <button type="button" className="btn btn-category mx-2 my-2 text-light">Finance</button>
-                            <button type="button" className="btn btn-category mx-2 my-2 text-light">Software Development</button>
-                            <button type="button" className="btn btn-category mx-2 my-2 text-light">Other</button>
-                           
+                            {categories.map((category)=> 
+                                <form>
+                                <label>
+                                    <input
+                                        className="mx-2"
+                                        name="multicategories"
+                                        value={""}
+                                        type="checkbox"
+                                        onChange={""} 
+                                    />
+                                {category.jenis_kategori}
+                                </label>
+                                </form>
+                            )}
+                                
                             <div>
-                            <a href="/Dashboard" className="btn text-light float-right">Skip {'>'}</a>
+                                <a href="/Dashboard" className="btn text-light float-left font-weight-bold">Submit</a>
+                            </div>
+                            <div>
+                                <a href="/Dashboard" className="btn text-light float-right font-weight-bold">Skip {'>'}</a>
                             </div>
                             
                         </div>

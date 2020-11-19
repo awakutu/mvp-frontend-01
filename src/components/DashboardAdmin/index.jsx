@@ -54,6 +54,28 @@ function DashboardAdmin() {
       });
     }
 
+    function singleReject(id,username,email) {
+      setError(null);
+      setLoading(true);
+      const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization : token
+          },
+        };
+      axios.post('http://3.15.137.94:8084/api/admin/updateuser', [{ID: id, username: username, email: email}], config).then(response => {
+        console.log(response.data);
+        history.push('/DashboardAdmin');  
+        console.log("Berhasil Reject")
+      }).catch(error => {
+        setLoading(false);
+        console.log("Gagal Login")
+        // if (error.response.status === 401) setError(error.response.data.message);
+        // else setError("Something went wrong. Please try again later.");
+      
+      });
+    }
+
 
   function multiApprove(event) {
       const target = event.target;
@@ -189,7 +211,7 @@ function DashboardAdmin() {
                   <button type="button"  onClick={() => singleApprove(member.ID)} className="btn btn-sm btn-primary rounded-pill text-center mx-2 font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Approve
                   </button>
-                  <button type="button"  className="btn btn-sm btn-danger rounded-pill text-center font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
+                  <button type="button"  onClick={() => singleReject(member.ID,member.Username,member.email)}  className="btn btn-sm btn-danger rounded-pill text-center font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Reject
                   </button>
                   </td>
