@@ -58,22 +58,16 @@ function Dashboard() {
           <button className="btn btn-createGroup mx-4 my-4">
             Create Group
           </button>
-          
-          <div className="dropdown" >
-          <img className="img-dashboard mt-2" src={headerIMG} />
-          <div className="dropdown-content">
-          <a href="/Profile">
-          Profile
-          </a>
-          <a href="/Login" onClick={handleLogout} value="Login">
-          Logout
-          </a>
+
+          <div className="dropdown">
+            <img className="img-dashboard mt-2" src={headerIMG} />
+            <div className="dropdown-content">
+              <a href="/Profile">Profile</a>
+              <a href="/Login" onClick={handleLogout} value="Login">
+                Logout
+              </a>
+            </div>
           </div>
-          
-          </div>
-          
-       
-         
         </div>
       </header>
       <main className="container-fluid">
@@ -125,7 +119,8 @@ function Dashboard() {
                 Technology
               </button>
               <p className="ml-auto">
-                <span className="text-primary">{today}</span>, {currenDate.getDate()} {month} {currenDate.getFullYear()}
+                <span className="text-primary">{today}</span>,{" "}
+                {currenDate.getDate()} {month} {currenDate.getFullYear()}
               </p>
             </div>
             <img className="w-100" src={Info} />
@@ -337,7 +332,6 @@ function Dashboard() {
                     +20 more
                   </button>
                 </div>
-                
               </div>
             </div>
           </div>

@@ -1,43 +1,33 @@
 import headerIMG from "../../assets/profileIMG.jpg";
 import { useState, useEffect } from "react";
+import { getToken, getID, getUsername } from "../../utils/Common";
+import Axios from "axios";
+
 const Header = () => {
-  const [Username, setUsername] = useState("");
+  const [token, setToken] = useState(getToken());
+  const [Username, setUsername] = useState(getUsername());
+  const [Id, setId] = useState(getID());
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
 
-  // useEffect(() => {
-  //   retrieveHeader();
-  // }, []);
-
-  // const retrieveHeader = () => {
-  //   ApiService.getUser(Username,email)
-  //     .then(response => {
-  //       // setUsername(response.username);
-  //       console.log(response.username);
-  //       console.log(response.email);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // };
-
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setData({ ...data, [name]: value });
-  // };
-
-  // const update = () => {
-  //   ApiService.postRegister(data)
-  //     .then((response) => {
-  //       const newUser = [...list, response.data];
-  //       setList(newUser);
-  //       console.log(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+  useEffect(() => {
+    Axios.get(`http://3.15.137.94:8084/api/profile/${Username}`, config) 
+    .then((response) => {
+        setUsername(response.data.data.Data.Username);
+        setEmail(response.data.data.Data.email);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(true);
+      });
+  }, []);
 
   return (
     <header className="container-fluid py-3">
@@ -51,8 +41,8 @@ const Header = () => {
               <a href="/Dashboard">
                 <p className="btn btn-close float-right ">X</p>
               </a>
-              <h2 className="">Jiang Xu Lei</h2>
-              <p>jianxu@gmail.com</p>
+              <h2 className="">{Username}</h2>
+              <p>{email}</p>
               <h4>Tags</h4>
               <button type="button" className="btn button-tags">
                 Lifestyle

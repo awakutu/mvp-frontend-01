@@ -1,12 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getToken, getID, getUsername } from "../../utils/Common";
+import Axios from "axios";
 
 export const ChangeProfile = () => {
-  const [text, setText] = useState("");
-  const [inputText, setInputText] = useState("");
   const [mode, setMode] = useState("view");
+  const [token, setToken] = useState(getToken());
+  const [Username, setUsername] = useState(getUsername());
+  const [Id, setId] = useState(getID());
+  const [Nama, setNama] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Sandi, setSandi] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [TTL, setTTL] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
 
+  useEffect(() => {
+    Axios.get(`http://3.15.137.94:8084/api/profile/${Username}`, config)
+      .then((response) => {
+        setNama(response.data.data.name);
+        setEmail(response.data.data.email);
+        setPhone(response.data.data.phone);
+        setTTL(response.data.data.ttl);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(true);
+      });
+  }, []);
   const handleSave = () => {
     setMode("view");
+    Axios.post(`http://3.15.137.94:8084/api/profile/${Username}/update`, config)
+    .then((response) => {
+      
+      console.log("Berhasil Update")
+    })
+    .catch((err) => {
+      setError(err.message);
+      setLoading(true);
+    });
+    
   };
 
   const handleEdit = () => {
@@ -23,7 +62,7 @@ export const ChangeProfile = () => {
                 <p>Nama</p>
               </b>
               {mode === "view" ? (
-                <p id="name">Jiang Xu Lei</p>
+                <p id="name"></p>
               ) : (
                 <input
                   type="text"
@@ -37,7 +76,7 @@ export const ChangeProfile = () => {
                 <p>Email Lama</p>
               </b>
               {mode === "view" ? (
-                <p id="emailLama">jiangxu@gmail.com</p>
+                <p id="emailLama">{Email}</p>
               ) : (
                 <input
                   type="email"
@@ -132,9 +171,12 @@ export const ChangeProfile = () => {
                   id="emailLamaInp"
                 />
               )}
-              <button className="btn btn-change px-5 mt-3" onClick={mode === "view" ? handleEdit : handleSave}>
-            {mode ==="view"? "Ubah Profile" : "Simpan"}
-          </button>
+              <button
+                className="btn btn-change px-5 mt-3"
+                onClick={mode === "view" ? handleEdit : handleSave}
+              >
+                {mode === "view" ? "Ubah Profile" : "Simpan"}
+              </button>
             </div>
           </div>
         </div>
