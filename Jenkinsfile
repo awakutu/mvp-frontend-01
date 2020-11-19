@@ -33,7 +33,7 @@ pipeline {
 
     stage('Static Analysis') {
       steps {
-        sh 'Echo Static Analysis'
+        sh 'Echo Static'
       }
     }
 
