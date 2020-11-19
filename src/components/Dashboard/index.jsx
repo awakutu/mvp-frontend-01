@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { removeUserSession } from "../../utils/Common";
+import React, { useState } from "react";
+import { removeUserSession, getToken } from "../../utils/Common";
 import { useHistory } from "react-router-dom";
 import "./style.css";
 import Logo from "../../assets/icon.svg";
 import Info from "../../assets/info.svg";
 import headerIMG from "../../assets/profileIMG.jpg";
+import axios from "axios";
 
 function Dashboard() {
+  
+  const [articles, setArticles] = useState([]);
+  const [token, setToken] = useState(getToken());
   const history = useHistory();
   const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const bulan = [
@@ -40,6 +44,16 @@ function Dashboard() {
     removeUserSession();
     history.push("/Login");
   };
+  
+  const config = {
+    headers: {
+    "Content-Type": "application/json",
+    Authorization : token
+    },
+  };
+axios.get("http://3.15.137.94:8084/api/Dashboard/all", config)
+.then(response => setArticles(response.data.data.Data));
+console.log(articles);
 
   return (
     <>
@@ -134,8 +148,8 @@ function Dashboard() {
               </button>
             </div>
             {mode === "view" ? null : (
-              <div class="card w-100 my-2 ">
-                <div class="card-body ">
+              <div className="card w-100 my-2 ">
+                <div className="card-body ">
                   <div className="row">
                     <div className="col-2">
                       <img className="img-dashboard mt-2" src={headerIMG} />
@@ -169,19 +183,50 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
+              
             )}
+           
+            
+           {articles.map((article) => 
+            <div className="card w-100 my-2">
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-2">
+                    <img className="img-dashboard mt-2" src={headerIMG} />
+                  </div>
+                  <div className="col-10">
+                  
+                    <h4 className="card-title">
+                      {article.title}
+                    </h4>
+                    
+                    <p className="card-text">
+                      {article.deskripsi}
+                    </p>
+                    <div className="d-flex justify-content-between">
+                      <button className="btn">Like</button>
+                      <button className="btn">Comment</button>
+                      
 
-            <div class="card w-100 my-2">
-              <div class="card-body">
+                      <button className="btn">Share</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           )}
+            </div>
+            {/* <div className="card w-100 my-2">
+              <div className="card-body">
                 <div className="row">
                   <div className="col-2">
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
-                    <h4 class="card-title">
+                    <h4 className="card-title">
                       Kikcstarter replies to complaints
                     </h4>
-                    <p class="card-text">
+                    <p className="card-text">
                       Many focused on a book which attracted huge numbers of
                       complaints about encouragix sexual assault. Users who
                       received responses to long-expired projects from 2013 took
@@ -197,17 +242,17 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            <div class="card w-100 my-2">
-              <div class="card-body">
+            <div className="card w-100 my-2">
+              <div className="card-body">
                 <div className="row">
                   <div className="col-2">
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
-                    <h4 class="card-title">
+                    <h4 className="card-title">
                       Kikcstarter replies to complaints
                     </h4>
-                    <p class="card-text">
+                    <p className="card-text">
                       Many focused on a book which attracted huge numbers of
                       complaints about encouragix sexual assault. Users who
                       received responses to long-expired projects from 2013 took
@@ -223,17 +268,17 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            <div class="card w-100 my-2">
-              <div class="card-body">
+            <div className="card w-100 my-2">
+              <div className="card-body">
                 <div className="row">
                   <div className="col-2">
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
-                    <h4 class="card-title">
+                    <h4 className="card-title">
                       Kikcstarter replies to complaints
                     </h4>
-                    <p class="card-text">
+                    <p className="card-text">
                       Many focused on a book which attracted huge numbers of
                       complaints about encouragix sexual assault. Users who
                       received responses to long-expired projects from 2013 took
@@ -249,36 +294,10 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            <div class="card w-100 my-2">
-              <div class="card-body">
-                <div className="row">
-                  <div className="col-2">
-                    <img className="img-dashboard mt-2" src={headerIMG} />
-                  </div>
-                  <div className="col-10">
-                    <h4 class="card-title">
-                      Kikcstarter replies to complaints
-                    </h4>
-                    <p class="card-text">
-                      Many focused on a book which attracted huge numbers of
-                      complaints about encouragix sexual assault. Users who
-                      received responses to long-expired projects from 2013 took
-                      to Twitter to congartulate the company on its responses
-                      timess..
-                    </p>
-                    <div className="d-flex justify-content-between">
-                      <button className="btn">Like</button>
-                      <button className="btn">Comment</button>
-                      <button className="btn">Share</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> */}
 
           <div className="col-sm-3">
-            <div class="card w-100 my-4">
+            <div className="card w-100 my-4">
               <div className="card-body">
                 <h3 className="card-title">Popular Contributor</h3>
                 <div className="d-flex flex-column text-center">
@@ -289,7 +308,7 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            <div class="card w-100 my-3">
+            <div className="card w-100 my-3">
               <div className="card-body">
                 <h3 className="card-title">Popular Articles</h3>
                 <div className="d-flex flex-column text-center">
@@ -300,7 +319,7 @@ function Dashboard() {
                 </div>
               </div>
             </div>
-            <div class="card w-100 my-3">
+            <div className="card w-100 my-3">
               <div className="card-body">
                 <h3 className="card-title">Popular Tags</h3>
                 <div className=" text-center">

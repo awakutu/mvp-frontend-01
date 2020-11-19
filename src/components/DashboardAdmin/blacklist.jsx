@@ -60,20 +60,7 @@ function Blacklist() {
                 <div className="row">
                   <span className="mx-4" />
                   <img src={Logo} alt="Logo" />
-                  <div className="form-group has-search pt-4 pl-4 w-50 mx-4">
-                    <span className="fa fa-search form-control-feedback" />
-                    <input
-                      type="text"
-                      className="form-control pl-5"
-                      placeholder="Search Articles and Collaboration"
-                    />
-                  </div>
-                  <button className="btn btn-createGroup mx-4 my-4">
-                    Create Group
-                  </button>
-                  <a href="/Profile">
-                    <img className="img-dashboard mt-2" src={headerIMG} />
-                  </a>
+                  
                 </div>
             </header>
 
