@@ -12,6 +12,7 @@ function Blacklist() {
     // const [token, setToken] = useState(getToken()); 
     // console.log(token);
     // console.log({token});
+    const [token, setToken] = useState(getToken());
     const [members, setMembers] = useState([]);
     const [ID, setID] = useState('');
     const [error, setError] = useState(null);
@@ -25,10 +26,10 @@ function Blacklist() {
     const config = {
         headers: {
         "Content-Type": "application/json",
-        Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiIn0.-CmeD9djX3ZzMWQ6kmE_W11Cbk1ZmZCSqtl_bgk_GNU"
+        Authorization : token
         },
       };
-    axios.get("http://3.15.137.94:8084/api/admin/listuser", config)
+    axios.get("http://3.15.137.94:8084/api/admin/listuserej", config)
     .then(response => setMembers(response.data.data.Data));
     
     function approve(id) {
@@ -37,19 +38,19 @@ function Blacklist() {
       const config = {
           headers: {
             "Content-Type": "application/json",
-            Authorization : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiIn0.-CmeD9djX3ZzMWQ6kmE_W11Cbk1ZmZCSqtl_bgk_GNU"
+            Authorization : token
           },
         };
         console.log(ID)
-      axios.post('http://3.15.137.94:8084/api/admin/updateuser', [{ID: id}], config).then(response => {
+      axios.post('http://3.15.137.94:8084/api/admin/rejectoap', [{ID: id}], config).then(response => {
         console.log(response.data);
-        history.push('/DashboardAdmin');  
+        history.push('/DashboardAdminBlacklist');  
         console.log("Berhasil Approve")
       }).catch(error => {
         setLoading(false);
         console.log("Gagal Login")
-        if (error.response.status === 401) setError(error.response.data.message);
-        else setError("Something went wrong. Please try again later.");
+        // if (error.response.status === 401) setError(error.response.data.message);
+        // else setError("Something went wrong. Please try again later.");
       
       });
     }

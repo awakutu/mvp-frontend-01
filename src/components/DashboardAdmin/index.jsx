@@ -63,7 +63,7 @@ function DashboardAdmin() {
             Authorization : token
           },
         };
-      axios.post('http://3.15.137.94:8084/api/admin/updateuser', [{ID: id, username: username, email: email}], config).then(response => {
+      axios.post('http://3.15.137.94:8084/api/admin/reject', [{ID: id, username: username, email: email}], config).then(response => {
         console.log(response.data);
         history.push('/DashboardAdmin');  
         console.log("Berhasil Reject")
@@ -191,8 +191,11 @@ function DashboardAdmin() {
                   <td></td>
                   <td></td>
                   <td className="text-center">
-                    <button type="button" onClick={() => submitMultiApprove()} className="btn btn-sm btn-success rounded-pill text-center mx-2 font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    <button type="button" onClick={() => submitMultiApprove()} className="btn btn-sm btn-primary rounded-pill text-center mx-2 font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
                       Approve
+                    </button>
+                    <button type="button" onClick={() => submitMultiApprove()} className="btn btn-sm btn-danger rounded-pill text-center font-weight-bold" data-toggle="button" aria-pressed="false" autocomplete="off">
+                      Reject
                     </button>
                   </td>
                 </tr>
