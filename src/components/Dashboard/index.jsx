@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { removeUserSession, getToken } from "../../utils/Common";
+import React, { useState, useEffect } from "react";
+import { Button, FormGroup, FormControl, Image } from "react-bootstrap";
+import { removeUserSession, getToken, getUsername } from "../../utils/Common";
 import { useHistory } from "react-router-dom";
 import "./style.css";
 import Logo from "../../assets/icon.svg";
@@ -8,9 +9,12 @@ import headerIMG from "../../assets/profileIMG.jpg";
 import axios from "axios";
 
 function Dashboard() {
-  
+
   const [articles, setArticles] = useState([]);
   const [token, setToken] = useState(getToken());
+  const [username, setUsername] = useState(getUsername());
+  const [title, setTitle] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
   const history = useHistory();
   const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const bulan = [
@@ -32,12 +36,12 @@ function Dashboard() {
   let month = bulan[currenDate.getMonth()];
   const [mode, setMode] = useState("view");
 
-  const handleSavePost = () => {
-    setMode("view");
+  const handleCancel = () => {
+    setMode("edit");
   };
 
   const handleAddPost = () => {
-    setMode("edit");
+    setMode("view");
   };
 
   const handleLogout = () => {
@@ -48,12 +52,30 @@ function Dashboard() {
   const config = {
     headers: {
     "Content-Type": "application/json",
-    Authorization : token
+    Authorization : `${token}`
     },
   };
-axios.get("http://3.15.137.94:8084/api/Dashboard/all", config)
-.then(response => setArticles(response.data.data.Data));
-console.log(articles);
+
+  useEffect(() => {
+    axios.get("http://3.15.137.94:8084/api/Dashboard/all", config)
+    .then(response => setArticles(response.data.data.Data.reverse()));
+    console.log(articles);
+  }, [articles]);
+
+  function handlePost(e) {
+    e.preventDefault();
+    axios.post("http://3.15.137.94:8084/api/Dashboard", {title,deskripsi,username}, config)
+    history.push("/Dashboard");
+    console.log("Berhasil Post");
+  }
+
+  function handleLike(id_article) {
+    axios.post(`http://3.15.137.94:8084/api/likei/${id_article}`, config)
+  }
+
+  function handleDislike(id_article) {
+    axios.post(`http://3.15.137.94:8084/api/liked/${id_article}`, config)
+  }
 
   return (
     <>
@@ -86,7 +108,44 @@ console.log(articles);
       </header>
       <main className="container-fluid">
         <div className="row main-wrap ">
-          <div className="col-sm-3 left-Bar sticky-top">
+        <nav className="col-md-3 d-none d-md-block sidebar">
+          <div className="sidebar-sticky">
+            <ul className="nav flex-column">
+              <li className="nav-item">
+                <a className="nav-link active" href="/Dashboard">
+                <i className="fa fa-dashboard pt-4" aria-hidden="true"></i>
+                {" "}Dashboard <span className="sr-only">(current)</span>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/Dashboard">
+                <i className="fa fa-suitcase pt-4" aria-hidden="true"></i>
+                {" "}Project
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/Group">
+                <i className="fa fa-group pt-4" aria-hidden="true"></i>
+                {" "}Group
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/Dashboard">
+                <i className="fa fa-file pt-4" aria-hidden="true"></i>
+                {" "}Portofolio
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/Dashboard">
+                <i className="fa fa-star pt-4" aria-hidden="true"></i>
+                {" "}Innovation Showcase
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+        </nav>
+          {/* <div className="col-sm-3 left-Bar sticky-top">
             <div className="d-flex">
               <i className="fa fa-braille pt-4" aria-hidden="true"></i>
               <a className="text-secondary" href="/Dashboard">
@@ -117,7 +176,7 @@ console.log(articles);
                 <p className="pt-3 pl-2">Innovation Showcase</p>
               </a>
             </div>
-          </div>
+          </div> */}
           <div className="col-sm-6 h-scroll">
             <div className="d-flex mt-2">
               <button type="button" className="btn button-tags">
@@ -141,21 +200,49 @@ console.log(articles);
             <div className="d-flex justify-content-between">
               <h4 className="mt-2">All Categories</h4>
               <button
-                className="btn btn-createGroup mx-4 my-4"
-                onClick={mode === "view" ? handleAddPost : null}
+                className={(mode==="view")?"btn btn-lg btn-primary mx-3 my-3":"btn btn-lg btn-danger mx-3 my-3"}
+                onClick={mode === "view" ? handleCancel : handleAddPost}
               >
-                + Create Post
+                {(mode==="view")?"Buat Postingan":"Batal"}
               </button>
             </div>
             {mode === "view" ? null : (
-              <div className="card w-100 my-2 ">
+              <div className="card w-100 my-2 bg-light">
                 <div className="card-body ">
                   <div className="row">
-                    <div className="col-2">
+                    <div className="col-2 font-weight-bold text-center">
+                      {username}<br></br>
                       <img className="img-dashboard mt-2" src={headerIMG} />
                     </div>
                     <div className="col-10">
-                      <input
+                  <form onSubmit={handlePost}>
+                          <FormGroup controlId="tittle">
+                            <FormControl
+                              autoFocus
+                              type="tittle"
+                              value={title}
+                              onChange={e => setTitle(e.target.value)}
+                              type="tittle"
+                              placeholder="Judul"
+                            />
+                          </FormGroup>
+                          <FormGroup controlId="deskripsi">
+                            <FormControl
+                              className="h-50 pb-5"
+                              value={deskripsi}
+                              onChange={e => setDeskripsi(e.target.value)}
+                              type="deskripsi"
+                              placeholder="Deskripsi"
+                            />
+                          </FormGroup>
+
+                          {/* <div className="text-right">  
+                            <a href="/register"> Lupa Password? </a>
+                          </div> */}
+                          
+                        <Button className="btn btn-lg btn-color font-weight-bold my-3 pull-right" type="submit">Post</Button>
+                     </form>
+                      {/* <input
                         className="form-control border-0"
                         placeholder="Title"
                         id="title"
@@ -178,7 +265,7 @@ console.log(articles);
                         >
                           {mode === "view" ? null : "Post"}
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -188,10 +275,11 @@ console.log(articles);
            
             
            {articles.map((article) => 
-            <div className="card w-100 my-2">
+            <div className="card w-100 my-2" key={article.ID}>
               <div className="card-body">
                 <div className="row">
-                  <div className="col-2">
+                  <div className="col-2 font-weight-bold text-center">
+                      {article.username}
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
@@ -204,12 +292,24 @@ console.log(articles);
                       {article.deskripsi}
                     </p>
                     <div className="d-flex justify-content-between">
-                      <button className="btn">Like</button>
-                      <button className="btn">Comment</button>
-                      
-
-                      <button className="btn">Share</button>
+                    <h4 className="">
+                    {article.like}  <i className="fa fa-thumbs-up" aria-hidden="true"> </i>
+                    </h4>
+                    <h4 className="">
+                    {article.Comment.length} <i className="fa fa-comment" aria-hidden="true"> </i>
+                    </h4>
                     </div>
+
+                      <hr></hr>
+                    <div className="d-flex justify-content-between">
+                    
+                      <button className="btn" onClick={() => handleLike(article.ID)}><i className="fa fa-thumbs-up" aria-hidden="true"> </i> </button>
+                      <button className="btn" onClick={() => handleDislike(article.ID)}><i className="fa fa-thumbs-down" aria-hidden="true"> </i> </button>
+                      <button className="btn"><i className="fa fa-comment" aria-hidden="true"> </i></button>
+                      
+                      <button className="btn"><i className="fa fa-share" aria-hidden="true"></i></button>
+                    </div>
+                    <hr></hr>
                   </div>
                 </div>
               </div>
