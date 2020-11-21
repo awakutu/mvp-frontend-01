@@ -58,24 +58,22 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    axios.get("http://3.15.137.94:8084/api/Dashboard/all", config)
+    axios.get("http://3.15.137.94:8084/api/dashboard/all", config)
     .then(response => setArticles(response.data.data.Data.reverse()));
-    console.log(articles);
   }, [articles]);
 
   function handlePost(e) {
     e.preventDefault();
-    axios.post("http://3.15.137.94:8084/api/Dashboard", {title,deskripsi,username}, config)
-    history.push("/Dashboard");
+    axios.post("http://3.15.137.94:8084/api/dashboard", {title,deskripsi,username}, config)
     console.log("Berhasil Post");
   }
 
   function handleLike(id_article) {
-    axios.post(`http://3.15.137.94:8084/api/likei/${id_article}`, config)
+    axios.post(`http://3.15.137.94:8084/api/likei/${id_article}`,{}, config)
   }
 
   function handleDislike(id_article) {
-    axios.post(`http://3.15.137.94:8084/api/liked/${id_article}`, config)
+    axios.post(`http://3.15.137.94:8084/api/liked/${id_article}`,{}, config)
   }
 
   return (

@@ -8,6 +8,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import LoginAdmin from './components/LoginAdmin';
 import Verification from './components/Verification';
+import Verified from './components/Verification/verified';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
 import Group from './components/Group';
@@ -17,6 +18,7 @@ import Blacklist from './components/DashboardAdmin/blacklist';
 import PrefCategory from './components/PrefCategory';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicRoute from './utils/PublicRoute';
+import DelayRoute from './utils/DelayRoute';
 
 export default function App() {
 	return (
@@ -27,6 +29,7 @@ export default function App() {
 				<PublicRoute path="/Login" component={Login} />{' '}
 				<PublicRoute path="/LoginAdmin" component={LoginAdmin} />{' '}
 				<PublicRoute path="/Verification" component={Verification} />{' '}
+				<DelayRoute path="/Verified" component={Verified} />{' '}
 				<PrivateRoute path="/Dashboard" component={Dashboard} />{' '}
 				<PrivateRoute path="/DashboardAdmin" component={DashboardAdmin} />{' '}
 				<PrivateRoute path="/DashboardAdminBlacklist" component={Blacklist} />{' '}
