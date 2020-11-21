@@ -26,6 +26,7 @@ function Blacklist() {
     const config = {
         headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
         Authorization : token
         },
       };
@@ -38,6 +39,7 @@ function Blacklist() {
       const config = {
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             Authorization : token
           },
         };
@@ -143,10 +145,7 @@ function Blacklist() {
           </div>
         </main>
       </div>
-    </div>
-
-           
-            
+    </div>            
         </div>
     )
 }
