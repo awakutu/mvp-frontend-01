@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { removeUserSession } from '../../utils/Common';
 import { useHistory } from 'react-router-dom';
+import { Modal, Button, Form } from 'react-bootstrap';
 import './style.css';
 import Logo from '../../assets/icon.svg';
-import Info from '../../assets/info.svg';
 import headerIMG from '../../assets/profileIMG.jpg';
 
 function Group() {
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 	const history = useHistory();
 	const handleLogout = () => {
 		removeUserSession();
@@ -74,92 +78,63 @@ function Group() {
 						<div className="row">
 							<div className="col-12">
 								<div className="d-flex flex-row justify-content-between">
-									<h3 className="mt-4">List Group</h3>
-									<button className="btn btn-createGroup mt-4">
-										Create Group
-									</button>
-								</div>
-							</div>
-							<div className="col-sm-6">
-								<div class="card w-100 my-2 mt-4">
-									<div class="card-body">
-										<div className="row">
-											<div className="col-10">
-												<h4 class="card-title">
-													<a href="/DetailGroup">Banking Social App</a>
-												</h4>
-												<div class="d-flex">
-													<div>Jumlah Anggota :</div>
-													<div class="text-right">15 Orang</div>
-												</div>
-												<p class="card-text">Deskripsi Group :</p>
-												<div className="card-text">
-													<p>
-														Merupakan Grup Project Banking Social App, yang
-														dibuat dalam Rangka Meningkatkan Kepedulian Para
-														Penggiat Bank dalam Hubungan sosial Bermasyarakat
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="card w-100 my-2 mt-4">
-									<div class="card-body">
-										<div className="row">
-											<div className="col-10">
-												<h4 class="card-title">
-													<a href="/DetailGroup">Banking Social App</a>
-												</h4>
-												<div class="d-flex">
-													<div>Jumlah Anggota :</div>
-													<div class="text-left">15 Orang</div>
-												</div>
-												<p class="card-text">Deskripsi Group :</p>
-												<div className="card-text">
-													<p>
-														Merupakan Grup Project Banking Social App, yang
-														dibuat dalam Rangka Meningkatkan Kepedulian Para
-														Penggiat Bank dalam Hubungan sosial Bermasyarakat
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="col-sm-6">
-								<div class="card w-100 my-2 mt-4">
-									<div class="card-body">
-										<div className="row">
-											<div className="col-10">
-												<h4 class="card-title">
-													<a href="/DetailGroup">Banking Social App</a>
-												</h4>
-												<div class="d-flex">
-													<div>Jumlah Anggota :</div>
-													<div class="text-right">15 Orang</div>
-												</div>
-												<p class="card-text">Deskripsi Group :</p>
-												<div className="card-text">
-													<p>
-														Merupakan Grup Project Banking Social App, yang
-														dibuat dalam Rangka Meningkatkan Kepedulian Para
-														Penggiat Bank dalam Hubungan sosial Bermasyarakat
-													</p>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+									<h3 className="mt-4">Project Innovation Group</h3>
 
+									<Button
+										className="btn-createGroup mt-4"
+										variant="primary"
+										onClick={handleShow}
+									>
+										Create Group
+									</Button>
+
+									<Modal show={show} onHide={handleClose}>
+										<Modal.Header closeButton>
+											<Modal.Title>
+												Create a Project Innovation Group
+											</Modal.Title>
+										</Modal.Header>
+										<Modal.Body>
+											<Form>
+												<Form.Group controlId="formGroupName">
+													<Form.Label>Project Group Name</Form.Label>
+													<Form.Control
+														type="text"
+														placeholder="Type the Group Name"
+													/>
+												</Form.Group>
+
+												<Form.Group controlId="formGroupDesc">
+													<Form.Label>Group Description</Form.Label>
+													<Form.Control
+														as="textarea"
+														rows={3}
+														placeholder="Write your Group Description"
+													/>
+												</Form.Group>
+											</Form>
+											<Button
+												className="btn-createGroup"
+												variant="primary"
+												type="submit"
+												onClick={handleClose}
+											>
+												Create Group
+											</Button>
+										</Modal.Body>
+										{/* <Modal.Footer className="D-flex justify-content-start">
+										
+										</Modal.Footer> */}
+									</Modal>
+								</div>
+							</div>
+
+							<div className="col-sm-12">
 								<div class="card w-100 my-2 mt-4">
 									<div class="card-body">
 										<div className="row">
 											<div className="col-10">
-												<h4 class="card-title">
-													<a href="/DetailGroup">Banking Social App</a>
-												</h4>
+												<h4 class="card-title">Banking Social App</h4>
 												<div class="d-flex">
 													<div>Jumlah Anggota :</div>
 													<div class="text-right">15 Orang</div>
@@ -172,6 +147,9 @@ function Group() {
 														Penggiat Bank dalam Hubungan sosial Bermasyarakat
 													</p>
 												</div>
+												<button className="btn btn-createGroup">
+													Lihat Grup
+												</button>
 											</div>
 										</div>
 									</div>
