@@ -62,7 +62,8 @@ export const ChangeProfile = () => {
         .then((response) => {
           console.log("Berhasil Update");
           alert("Data telah diperbarui");
-          window.location.reload(false);
+           window.location.reload(false);
+          console.log(" sandi konfirmasi " + SandiKonfirmasi, " sandi baru "+ Sandibaru, " sandi sekarang " + password)
         })
         .catch((err) => {
           setError(err.message);
