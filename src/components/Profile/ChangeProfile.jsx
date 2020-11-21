@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createRef } from "react";
 import { getToken, getID, getUsername } from "../../utils/Common";
 import Axios from "axios";
 
@@ -7,16 +7,22 @@ export const ChangeProfile = () => {
   const [token, setToken] = useState(getToken());
   const [Username, setUsername] = useState(getUsername());
   const [Id, setId] = useState(getID());
-  const [Nama, setNama] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Sandi, setSandi] = useState("");
-  const [Phone, setPhone] = useState("");
-  const [TTL, setTTL] = useState("");
+  const [name, setNama] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailBaru, setEmailBaru] = useState("");
+  const [emailKonfirmasi, setEmailKonfirmasi] = useState("");
+  const [password, setPassword] = useState("");
+  const [Sandibaru, setSandiBaru] = useState("");
+  const [SandiKonfirmasi, setSandiKonfirmasi] = useState("");
+  const [phone, setPhone] = useState("");
+  const [ttl, setTTL] = useState("");
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const config = {
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
       Authorization: token,
     },
   };
@@ -24,33 +30,53 @@ export const ChangeProfile = () => {
   useEffect(() => {
     Axios.get(`http://3.15.137.94:8084/api/profile/${Username}`, config)
       .then((response) => {
-        setNama(response.data.data.name);
-        setEmail(response.data.data.email);
-        setPhone(response.data.data.phone);
-        setTTL(response.data.data.ttl);
+        setNama(response.data.data.Data.name);
+        setEmail(response.data.data.Data.email);
+        setPhone(response.data.data.Data.phone);
+        setTTL(response.data.data.Data.ttl);
+        setPassword(response.data.data.Data.password);
       })
       .catch((err) => {
         setError(err.message);
         setLoading(true);
       });
   }, []);
-  const handleSave = () => {
+
+  const handleSave = (e) => {
     setMode("view");
-    Axios.post(`http://3.15.137.94:8084/api/profile/${Username}/update`, config)
-    .then((response) => {
-      
-      console.log("Berhasil Update")
-    })
-    .catch((err) => {
-      setError(err.message);
-      setLoading(true);
-    });
-    
+    e.preventDefault();
+    if (SandiKonfirmasi !== Sandibaru) {
+      alert("Mohon Periksa sandi yang Anda masukkan");
+      setSandiKonfirmasi("");
+      setSandiBaru("");
+    } else if (emailBaru !== emailKonfirmasi) {
+      alert("Mohon Periksa Email yang Anda masukkan");
+      setEmailBaru("");
+      setEmailKonfirmasi("");
+    } else if (name !== "" || phone !== "" || ttl !== "") {
+      Axios.post(
+        `http://3.15.137.94:8084/api/profile/${Username}/update`,
+        { name, email, phone, ttl, password },
+        config
+      )
+        .then((response) => {
+          console.log("Berhasil Update");
+          alert("Data telah diperbarui");
+          window.location.reload(false);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading(true);
+        });
+    } else {
+      alert("periksa kembali data");
+    }
   };
 
   const handleEdit = () => {
     setMode("edit");
   };
+
   return (
     <main className="container-fluid">
       <div className="card">
@@ -58,118 +84,107 @@ export const ChangeProfile = () => {
           <h4>Profile</h4>
           <div className="d-flex flex-row">
             <div className="col-sm-4">
-              <b>
-                <p>Nama</p>
-              </b>
+              <p className="font-weight-bold">Nama</p>
               {mode === "view" ? (
-                <p id="name"></p>
+                <p>{name === "" ? "Mohon Perbarui Data Anda" : name}</p>
               ) : (
                 <input
                   type="text"
+                  name="namaUser"
                   className="form-control w-50"
-                  name="nameInp"
-                  id="nameInp"
+                  onChange={(e) => setNama(e.target.value)}
                 />
               )}
-
-              <b>
-                <p>Email Lama</p>
-              </b>
               {mode === "view" ? (
-                <p id="emailLama">{Email}</p>
+                <>
+                  <p className="font-weight-bold">Email</p>
+
+                  <p id="email">{email}</p>
+                </>
               ) : (
-                <input
-                  type="email"
-                  className="form-control w-50"
-                  name="emailLamaInp"
-                  id="emailLamaInp"
-                />
+                <>
+                  <p className="font-weight-bold">Email Lama</p>
+                  <input
+                    type="email"
+                    className="form-control w-50"
+                    onChange={(e) => {setEmail(e.target.value)
+                    setEmailKonfirmasi(e.target.value)} }
+                  />
+                  
+                </>
               )}
 
-              <b>
-                <p>Sandi Baru</p>
-              </b>
-              {mode === "view" ? (
-                <p id="sandiBaru">rahasia</p>
-              ) : (
-                <input
-                  type="password"
-                  className="form-control w-50"
-                  name="sandiBaruInp"
-                  id="sandiBaruInp"
-                />
+              {mode === "view" ? null : (
+                <>
+                  <p className="font-weight-bold">Sandi Baru</p>
+
+                  <input
+                    type="password"
+                    className="form-control w-50"
+                    onChange={(e) => setSandiBaru(e.target.value)}
+                  />
+                </>
               )}
             </div>
             <div className="col-sm-4">
-              <b>
-                <p>Phone</p>
-              </b>
+              <p className="font-weight-bold">Phone</p>
+
               {mode === "view" ? (
-                <p id="phone">08152845327</p>
+                <p id="phone">
+                  {phone === "" ? "Mohon Perbarui Data Anda" : phone}
+                </p>
               ) : (
                 <input
                   type="tel"
                   className="form-control w-50"
-                  name="phoneInp"
-                  id="phoneInp"
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               )}
 
-              <b>
-                <p>Email Baru</p>
-              </b>
-              {mode === "view" ? (
-                <p id="emailBaru">jiangxu@gmail.com</p>
-              ) : (
-                <input
-                  type="email"
-                  className="form-control w-50"
-                  name="emailBaruInp"
-                  id="emailBaruInp"
-                />
+              {mode === "view" ? null : (
+                <>
+                  <p className="font-weight-bold">Email Baru</p>
+                  <input
+                    type="email"
+                    className="form-control w-50"
+                    onChange={(e) => setEmailBaru(e.target.value)}
+                  />
+                </>
               )}
 
-              <b>
-                <p>Konfirmasi Sandi Baru</p>
-              </b>
-              {mode === "view" ? (
-                <p id="konfSandiBaru">rahasia</p>
-              ) : (
-                <input
-                  type="password"
-                  className="form-control w-50"
-                  name="konfSandiInp"
-                  id="konfSandiInp"
-                />
+              {mode === "view" ? null : (
+                <>
+                  <p className="font-weight-bold">Konfirmasi Sandi Baru</p>
+
+                  <input
+                    type="password"
+                    className="form-control w-50"
+                    onChange={(e) => setSandiKonfirmasi(e.target.value)}
+                  />
+                </>
               )}
             </div>
             <div className="col-sm-4">
-              <b>
-                <p>Tempat & Tanggal Lahir</p>
-              </b>
+              <p className="font-weight-bold">Tempat & Tanggal Lahir</p>
               {mode === "view" ? (
-                <p id="ttl">Lemona, 7 August 2004</p>
+                <p id="ttl">{ttl === "" ? "Mohon Perbarui Data Anda" : ttl}</p>
               ) : (
                 <input
                   type="text"
                   className="form-control w-50"
-                  name="TTLInp"
-                  id="TTLInp"
+                  onChange={(e) => setTTL(e.target.value)}
                 />
               )}
+              {mode === "view" ? null : (
+                <>
+                  <p className="font-weight-bold">Sandi Lama</p>
 
-              <b>
-                <p>Sandi Lama</p>
-              </b>
-              {mode === "view" ? (
-                <p id="sandiLama">arahasia</p>
-              ) : (
-                <input
-                  type="text"
-                  className="form-control w-50 mb-1"
-                  name="emailLamaInp"
-                  id="emailLamaInp"
-                />
+                  <input
+                    type="password"
+                    className="form-control w-50 mb-1"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </>
               )}
               <button
                 className="btn btn-change px-5 mt-3"
