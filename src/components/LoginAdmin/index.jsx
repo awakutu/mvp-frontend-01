@@ -13,13 +13,12 @@ import axios from 'axios';
 function LoginAdmin() {
   const [Username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   function onSubmit(e) {
     e.preventDefault();
-    setError(null);
     setLoading(true);
     const config = {
         headers: {
@@ -27,20 +26,14 @@ function LoginAdmin() {
         },
       };
 
-    // hit api, bisa pakai kode dibawah
-    // axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
-    // atau
-    
     axios.post('http://3.15.137.94:8084/api/admin/login', { Username, password }, config).then(response => {
       setUserSession(response.data.data.token);
       history.push('/DashboardAdmin');  
       console.log("Berhasil Login")
     }).catch(error => {
-      setLoading(false);
-      console.log("Gagal Login")
-      // if (error.response.status === 401) setError(error.response.data.message);
-      // else setError("Something went wrong. Please try again later.");
-    
+      if (error.response.data.code === 400) {
+        setError("Fill in the Username and Password correctly");
+      }
     });
   }
 
@@ -91,7 +84,7 @@ function LoginAdmin() {
             </div>
             <div className="col-md-6 " >
               <div className="Login">
-                <h1 className="text-center font-weight-bold">Login Admin</h1>
+                <h1 className="text-center font-weight-bold">Admin Login</h1>
                 <form onSubmit={onSubmit}>
                   <FormGroup controlId="username">
                     <FormControl
@@ -111,9 +104,9 @@ function LoginAdmin() {
                     />
                   </FormGroup>
 
-                  {/* <div className="text-right">  
-                    <a href="/register"> Lupa Password? </a>
-                  </div> */}
+                  <div className="text-left text-danger">  
+                    <h6> {error} </h6>
+                  </div>
                   
                 <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Login</Button>
                   

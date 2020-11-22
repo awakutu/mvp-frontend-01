@@ -12,13 +12,10 @@ import "./style.css";
 function Login() {
   const [Username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-
-  
   function onSubmit(e) {
     e.preventDefault();
     setError(null);
@@ -33,29 +30,31 @@ function Login() {
     // axios.post('http://3.15.137.94:8084/api/login', { name, password }, config).then(response => {
     // atau
      
-
-
     API.postLogin(Username,password).then(response => {
       setLoading(false);
+      if (response.data.error_type == "OK") {
+        console.log(response.data.error_details);
+        setError(response.data.error_details);
+        console.log("Gagal Login");
+      }
       
-      var token = response.data.data.token;
-      var ID = response.data.data.ID;
-      var username = response.data.data.username;
-      console.log(token);
-      console.log(ID);
-      console.log(username);
-      setUserSession(token,ID,username);
-      
-      history.push('/PrefCategory');
-      console.log("Berhasil Login")
-      
-    }).catch(error => {
-      setLoading(false);
-      console.log("Gagal Login")
-      // if (error.response.status === 401) setError(error.response.data.message);
-      // else setError("Something went wrong. Please try again later.");
-    
+      else {
+        const token = response.data.data.token;
+        const ID = response.data.data.ID;
+        const username = response.data.data.username;
+        setUserSession(token,ID,username);
+        history.push('/PrefCategory');
+        console.log("Berhasil Login");
+      }
+    })
+    .catch(error => {
+      if (error.response.data.error_type == "Bad Request") {
+        console.log(error.response.data.error_details);
+        setError(error.response.data.error_details);
+        console.log("Gagal Login");
+      }
     });
+    
   }
 
   return (
@@ -86,19 +85,19 @@ function Login() {
                     />
                   </FormGroup>
 
-                  {/* <div className="text-right">  
-                    <a href="/register"> Lupa Password? </a>
-                  </div> */}
+                  <div className="text-left text-danger">  
+                    <h6> {error} </h6>
+                  </div>
                   
                 <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Login</Button>
                   
                   
                   <div className="text-center">
-                    <h5 className="text-center">Belum memiliki akun? <a href="/Register"> Buat akun </a></h5>
+                    <h5 className="text-center">Dont't have an account?<a href="/Register"> Register</a></h5>
                     
                     <div className="row">
                         <div className="col"><hr/></div>
-                        <div className="col-auto">Atau login dengan</div>
+                        <div className="col-auto">Or login with</div>
                         <div className="col"><hr/></div>
                     </div>
                     <a href="/register">

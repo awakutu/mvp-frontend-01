@@ -32,9 +32,10 @@ function PrefCategory() {
                         <div className="card-body">
                             <h6 className="card-title">Kategori artikel apa yang kamu sukai?</h6>
                             {categories.map((category)=> 
-                                <form>
+                                <form key={category.ID}>
                                 <label>
                                     <input
+                                        
                                         className="mx-2"
                                         name="multicategories"
                                         value={""}

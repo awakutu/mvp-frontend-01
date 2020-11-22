@@ -30,6 +30,11 @@ function Register() {
     // axios.post('http://3.15.137.94:8084/api/register', { Username, email, password }, config).then(response => {
     API.postRegister(Username,email,password).then(response => {  
       setLoading(false);
+      if (response.data.error_type == "OK") {
+        console.log(response.data.error_details);
+        setError(response.data.error_details);
+        console.log("Gagal Regis");
+      }
       console.log(response.data);
       console.log("Berhasil Regis")
       
@@ -61,7 +66,7 @@ function Register() {
             </div>
             <div className="col-md-6" >
               <div className="Login">
-                <h1 className="text-center font-weight-bold">Registrasi</h1>
+                <h1 className="text-center font-weight-bold">Register</h1>
                 <form onSubmit={onSubmit}>
                   <FormGroup controlId="Username">
                     <FormControl
@@ -90,17 +95,19 @@ function Register() {
                     />
                   </FormGroup>
 
-                
+                  <div className="text-left text-danger">  
+                    <h6> {error} </h6>
+                  </div>
                   
-                <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Daftar</Button>
+                <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Register</Button>
                   
                   
                   <div className="text-center">
-                    <h5 className="text-center">Sudah memiliki akun? <a href="/Login"> Login </a></h5>
+                    <h5 className="text-center">Already have an account? <a href="/Login"> Login </a></h5>
                     
                     <div className="row">
                         <div className="col"><hr/></div>
-                        <div className="col-auto">Atau daftar dengan</div>
+                        <div className="col-auto">Or register with</div>
                         <div className="col"><hr/></div>
                     </div>
                     <a href="/register">

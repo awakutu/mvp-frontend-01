@@ -65,15 +65,19 @@ function Dashboard() {
   function handlePost(e) {
     e.preventDefault();
     axios.post("http://3.15.137.94:8084/api/dashboard", {title,deskripsi,username}, config)
+    setMode("view");
     console.log("Berhasil Post");
   }
 
+  const [like, setLike] = useState("false");
   function handleLike(id_article) {
     axios.post(`http://3.15.137.94:8084/api/likei/${id_article}`,{}, config)
+    setLike("true");
   }
 
   function handleDislike(id_article) {
     axios.post(`http://3.15.137.94:8084/api/liked/${id_article}`,{}, config)
+    setLike("false");
   }
 
   return (
@@ -199,10 +203,10 @@ function Dashboard() {
             <div className="d-flex justify-content-between">
               <h4 className="mt-2">All Categories</h4>
               <button
-                className={(mode==="view")?"btn btn-lg btn-primary mx-3 my-3":"btn btn-lg btn-danger mx-3 my-3"}
+                className={(mode==="view")?"btn btn-md btn-primary mx-3 my-3":"btn btn-md btn-danger mx-3 my-3"}
                 onClick={mode === "view" ? handleCancel : handleAddPost}
               >
-                {(mode==="view")?"Buat Postingan":"Batal"}
+                {(mode==="view")?"Create Post":"Cancel"}
               </button>
             </div>
             {mode === "view" ? null : (
@@ -214,7 +218,7 @@ function Dashboard() {
                       <img className="img-dashboard mt-2" src={headerIMG} />
                     </div>
                     <div className="col-10">
-                  <form onSubmit={handlePost}>
+                  <form onSubmit={mode === "view" ? handleCancel : handlePost}>
                           <FormGroup controlId="tittle">
                             <FormControl
                               autoFocus
@@ -239,7 +243,7 @@ function Dashboard() {
                             <a href="/register"> Lupa Password? </a>
                           </div> */}
                           
-                        <Button className="btn btn-lg btn-color font-weight-bold my-3 pull-right" type="submit">Post</Button>
+                        <Button className="btn btn-md btn-color font-weight-bold my-3 pull-right" type="submit">Post</Button>
                      </form>
                       {/* <input
                         className="form-control border-0"
@@ -278,7 +282,7 @@ function Dashboard() {
               <div className="card-body">
                 <div className="row">
                   <div className="col-2 font-weight-bold text-center">
-                      {article.username}
+                      {article.username}<br></br>
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
@@ -292,16 +296,21 @@ function Dashboard() {
                     </p>
                     <div className="d-flex justify-content-between">
                     <h4 className="">
-                    {article.like}  <i className="fa fa-thumbs-up" aria-hidden="true"> </i>
+                    {article.like}  <i className="fa fa-heart text-danger" aria-hidden="true"> </i>
                     </h4>
                     <h4 className="">
-                    {article.Comment.length} <i className="fa fa-comment" aria-hidden="true"> </i>
+                    {article.Comment.length} <i className="fa fa-comment text-primary" aria-hidden="true"> </i>
                     </h4>
                     </div>
 
                       <hr></hr>
                     <div className="d-flex justify-content-between">
-                    
+                      {/* <button 
+                        className="btn"
+                        onClick={like === "false" ? () => handleLike(article.ID) : () => handleDislike(article.ID)}
+                      >
+                        <i  className={like === "false" ? "fa fa-heart" : "fa fa-heart text-danger"} aria-hidden="true"> </i> 
+                      </button> */}
                       <button className="btn" onClick={() => handleLike(article.ID)}><i className="fa fa-thumbs-up" aria-hidden="true"> </i> </button>
                       <button className="btn" onClick={() => handleDislike(article.ID)}><i className="fa fa-thumbs-down" aria-hidden="true"> </i> </button>
                       <button className="btn"><i className="fa fa-comment" aria-hidden="true"> </i></button>

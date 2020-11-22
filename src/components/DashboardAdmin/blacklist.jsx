@@ -6,7 +6,7 @@ import axios from 'axios';
 import { getToken } from '../../utils/Common';
 import '../../utils/Common';
 import Logo from "../../assets/icon.svg";
-import headerIMG from "../../assets/profileIMG.jpg";
+import Sidebar from "./sidebar";
 
 function Blacklist() {
     // const [token, setToken] = useState(getToken()); 
@@ -59,57 +59,25 @@ function Blacklist() {
   
             <div className="container-fluid">
               <div className="row">
-                <nav className="col-md-3 d-none d-md-block sidebar">
-                  <div className="sidebar-sticky">
-                    <ul className="nav flex-column">
-                      <li className="nav-item">
-                        <a className="nav-link active" href="#">
-                        <i className="fa fa-dashboard pt-4" aria-hidden="true"></i>
-                        {" "}Dashboard <span className="sr-only">(current)</span>
-                        </a>
-                      </li>
-  
-                      <li className="nav-item">
-                        <a className="nav-link" href="/DashboardAdmin">
-                        <i className="fa fa-group pt-4" aria-hidden="true"></i>
-                        {" "}Approval Management
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="/DashboardAdminBlacklist">
-                        <i className="fa fa-ban pt-4" aria-hidden="true"></i>
-                        {" "}Blacklist Users
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={handleLogout}>
-                        <i className="fa fa-sign-out pt-4" aria-hidden="true"></i>
-                        {" "}Sign Out
-                        </a>
-                      </li>
-                      
-                    </ul>
-                  </div>
-                </nav>
+               <Sidebar/>
   
                 <main role="main" className="col-md-9 ml-sm-auto col-lg-9 px-4">
                   <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 className="text-primary font-weight-bold">Admin Dashboard</h1>   
+                    <h1 className="text-primary font-weight-bold">Blacklist Users</h1>   
                   </div>
-                  <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+                  {/* <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
                     <h3 className="text-secondary font-weight-bold">Blacklist Users</h3>     
                     
-                  </div>
+                  </div> */}
                   <div className="table-responsive">
                     <table className="table table-sm">
                       <thead className="bg-primary my-3">
                         <tr className="text-light" >
-                          <th>ID</th>
-                          <th>Nama</th>
+                        <th>ID</th>
+                          <th>Username</th>
                           <th>Email</th>
                           <th>Status</th>
-                          {/* <th className="text-center">Status</th> */}
-                          <th className="text-center">Opsi</th>
+                          <th className="text-center">Option</th>
                         </tr>
                       </thead>
                       <tbody>
