@@ -16,7 +16,7 @@ export const ChangeProfile = () => {
   const [SandiKonfirmasi, setSandiKonfirmasi] = useState("");
   const [phone, setPhone] = useState("");
   const [ttl, setTTL] = useState("");
-
+  const bcrypt = require('bcryptjs');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const config = {
@@ -34,7 +34,9 @@ export const ChangeProfile = () => {
         setEmail(response.data.data.Data.email);
         setPhone(response.data.data.Data.phone);
         setTTL(response.data.data.Data.ttl);
-        setPassword(response.data.data.Data.password);
+      //  setPassword(bcrypt.hashSync(response.data.data.Data.password));
+        console.log("get pass " +response.data.data.Data.password)
+        console.log("get pass check bcrypt " +bcrypt.compareSync("rahasia", response.data.data.Data.password))
       })
       .catch((err) => {
         setError(err.message);
@@ -54,6 +56,9 @@ export const ChangeProfile = () => {
       setEmailBaru("");
       setEmailKonfirmasi("");
     } else if (name !== "" || phone !== "" || ttl !== "") {
+      console.log("sebelum dibcrypt "+password)
+      setPassword(bcrypt.hashSync(password))
+      console.log("sesudah dibcrypt "+password)
       Axios.post(
         `http://3.15.137.94:8084/api/profile/${Username}/update`,
         { name, email, phone, ttl, password },
