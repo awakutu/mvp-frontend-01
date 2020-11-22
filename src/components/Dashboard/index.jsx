@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, FormGroup, FormControl, Image } from "react-bootstrap";
+import { Button, FormGroup, FormControl, Form, Col, Modal } from "react-bootstrap";
 import { removeUserSession, getToken, getUsername } from "../../utils/Common";
 import { useHistory } from "react-router-dom";
 import "./style.css";
@@ -15,6 +15,8 @@ function Dashboard() {
   const [username, setUsername] = useState(getUsername());
   const [title, setTitle] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
+  const [type_post, setType_post] = useState("");
+  const [kategori, setKategori] = useState("");
   const history = useHistory();
   const hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const bulan = [
@@ -64,7 +66,7 @@ function Dashboard() {
 
   function handlePost(e) {
     e.preventDefault();
-    axios.post("http://3.15.137.94:8084/api/dashboard", {title,deskripsi,username}, config)
+    axios.post("http://3.15.137.94:8084/api/dashboard", {title,deskripsi,username,type_post,kategori}, config)
     setMode("view");
     console.log("Berhasil Post");
   }
@@ -78,6 +80,15 @@ function Dashboard() {
   function handleDislike(id_article) {
     axios.post(`http://3.15.137.94:8084/api/liked/${id_article}`,{}, config)
     setLike("false");
+  }
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  function deletePost(id_article,) {
+    axios.post("http://3.15.137.94:8084/api/dashboard/delete",{ID : id_article}, config)
+    handleClose();
   }
 
   return (
@@ -236,8 +247,49 @@ function Dashboard() {
                               onChange={e => setDeskripsi(e.target.value)}
                               type="deskripsi"
                               placeholder="Deskripsi"
+                              as="textarea" 
+                              rows={3}
                             />
                           </FormGroup>
+                          
+                          <Form.Row>
+                          <Col>
+                            <FormGroup controlId="type">
+                              <FormControl
+                                value={type_post}
+                                onChange={e => setType_post(e.target.value)}
+                                type="type"
+                                placeholder="Type"
+                                as="select"   
+                                defaultValue=""
+                              >
+                              <option value="" disabled>Type</option>
+                              <option>Article</option>
+                              <option>News</option>
+                              <option>Others</option>
+                              </FormControl>
+                            </FormGroup>
+                          </Col>
+                          <Col>
+                            <FormGroup controlId="category">
+                              <FormControl
+                                value={kategori}
+                                onChange={e => setKategori(e.target.value)}
+                                type="category"
+                                placeholder="Category"
+                                as="select"   
+                                defaultValue=""
+                              >
+                              <option value="" disabled>Category</option>
+                              <option>Sport</option>
+                              <option>Finance</option>
+                              <option>Life</option>
+                              <option>Fashion</option>
+                              <option>Others</option>
+                              </FormControl>
+                            </FormGroup>
+                          </Col>
+                          </Form.Row>
 
                           {/* <div className="text-right">  
                             <a href="/register"> Lupa Password? </a>
@@ -286,7 +338,33 @@ function Dashboard() {
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
-                  
+                    <div className="d-flex flex-row-reverse bd-highlight">
+                      <div>
+                        <button className="btn">
+                          <i className="fa fa-edit text-secondary"></i>
+                        </button>
+                        <button className="btn" onClick={handleShow}>
+                          <i className="fa fa-trash text-secondary"></i>
+                        </button>
+                        </div>
+                    </div>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Delete Post</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>Are you sure to delete this post?</Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="danger" onClick={handleClose}>
+                          Cancel
+                        </Button>
+                        <Button variant="primary" onClick={() => deletePost(article.ID)}>
+                          Delete
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                    <div className="d-flex justify-content-start">
+                      <h6>{article.type_post} {"-"} {article.kategori}</h6>
+                    </div>
                     <h4 className="card-title">
                       {article.title}
                     </h4>
