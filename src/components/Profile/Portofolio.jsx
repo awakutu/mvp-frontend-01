@@ -1,6 +1,6 @@
 export default function Portofolio() {
   return (
-    <main className="container-fluid">
+    <main className="container-fluid" >
       <div className="card my-4">
         <div className="card-body">
           <h5>Experience</h5>
@@ -80,9 +80,6 @@ export default function Portofolio() {
           </span>
         </div>
       </div>
-   
-   
-   
     </main>
   );
 }
