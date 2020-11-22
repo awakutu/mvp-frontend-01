@@ -34,9 +34,8 @@ export const ChangeProfile = () => {
         setEmail(response.data.data.Data.email);
         setPhone(response.data.data.Data.phone);
         setTTL(response.data.data.Data.ttl);
-      //  setPassword(bcrypt.hashSync(response.data.data.Data.password));
         console.log("get pass " +response.data.data.Data.password)
-        console.log("get pass check bcrypt " +bcrypt.compareSync("rahasia", response.data.data.Data.password))
+        console.log("get pass check bcrypt " +bcrypt.compareSync("sandi yang dimasukkan", response.data.data.Data.password))
       })
       .catch((err) => {
         setError(err.message);
@@ -84,7 +83,7 @@ export const ChangeProfile = () => {
   };
 
   return (
-    <main className="container-fluid">
+    <main className="container-fluid mt-4">
       <div className="card">
         <div className="card-body">
           <h4>Profile</h4>

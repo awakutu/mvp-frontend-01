@@ -121,6 +121,7 @@ console.log(response.data.data.Data.[0].jenis_kategori);
 //   }; 
 
   return (
+    <>
     <header className="container-fluid py-3">
       <div className="card">
         <div className="card-body">
@@ -149,6 +150,7 @@ console.log(response.data.data.Data.[0].jenis_kategori);
         </div>
       </div>
     </header>
+    </>
   );
 };
 
