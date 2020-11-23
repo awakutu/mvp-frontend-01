@@ -353,12 +353,14 @@ function Dashboard() {
                         <button className="btn">
                           <i className={(article.username === username) ? "fa fa-edit text-secondary":"fa fa-edit text-secondary invisible"}></i>
                         </button>
-                        <button className="btn" onClick={(article.username === username) ? handleShow : null}>
+                        <button className="btn" onClick={() => deletePost(article.ID)}>
+                        {/* use modal */}
+                        {/* <button className="btn" onClick={(article.username === username) ? handleShow : null}> */}
                           <i className={(article.username === username) ? "fa fa-trash text-secondary":"fa fa-trash text-secondary invisible"}></i>
                         </button>
                         </div>
                     </div>
-                    <Modal show={show} onHide={handleClose}>
+                    {/* <Modal show={show} onHide={handleClose}>
                       <Modal.Header closeButton>
                         <Modal.Title>Delete Post</Modal.Title>
                       </Modal.Header>
@@ -371,7 +373,7 @@ function Dashboard() {
                           Delete
                         </Button>
                       </Modal.Footer>
-                    </Modal>
+                    </Modal> */}
                     <div className="d-flex justify-content-start">
                       <h6>{article.type_post} {"-"} {article.kategori}</h6>
                     </div>
