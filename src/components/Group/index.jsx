@@ -1,21 +1,55 @@
-import React, { useState } from 'react';
-import { removeUserSession } from '../../utils/Common';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+// import { removeUserSession } from '../../utils/Common';
+// import { useHistory } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { getToken, getID, getUsername } from '../../utils/Common';
 import './style.css';
 import Logo from '../../assets/icon.svg';
 import headerIMG from '../../assets/profileIMG.jpg';
+import axios from 'axios';
 
 function Group() {
 	const [show, setShow] = useState(false);
-
+	const [token, setToken] = useState(getToken());
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const history = useHistory();
-	const handleLogout = () => {
-		removeUserSession();
-		history.push('/Login');
+	const [mode, setMode] = useState("view");
+	const [username, setUsername] = useState(getUsername());
+	const [title, setTitle] = useState('');
+	const [id_user, setId_user] = useState(+getID()); //menggunakan + utk mengubah tipe data string ke int 
+	const [deskripsi, setDeskripsi] = useState('');
+	const [projects, setProjects] = useState([]);
+	// const history = useHistory();
+	// const handleLogout = () => {
+	// 	removeUserSession();
+	// 	history.push('/Login');
+	// };
+
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': '*',
+			Authorization: `${token}`
+		},
 	};
+
+	useEffect(() => {
+		axios
+			.get('http://3.15.137.94:8084/api/project', config)
+			.then((response) => setProjects(response.data.data.Data.reverse()));
+	}, [projects]);
+
+	function handleAdd(e) {
+		e.preventDefault();
+		axios.post(
+			'http://3.15.137.94:8084/api/project',
+			{title, deskripsi, id_user, username},
+			config
+		)
+		console.log('Berhasil Post');
+		handleClose();
+	}
 
 	return (
 		<>
@@ -95,32 +129,40 @@ function Group() {
 											</Modal.Title>
 										</Modal.Header>
 										<Modal.Body>
-											<Form>
+										<form onSubmit={handleAdd}>
 												<Form.Group controlId="formGroupName">
-													<Form.Label>Project Group Name</Form.Label>
+													<Form.Label className="font-weight-bold">
+														Project Group Name
+													</Form.Label>
 													<Form.Control
-														type="text"
+														type="title"
+														value={title}
+														onChange={(e) => setTitle(e.target.value)}
 														placeholder="Type the Group Name"
 													/>
 												</Form.Group>
 
 												<Form.Group controlId="formGroupDesc">
-													<Form.Label>Group Description</Form.Label>
+													<Form.Label className="font-weight-bold">
+														Group Description
+													</Form.Label>
 													<Form.Control
 														as="textarea"
+														value={deskripsi}
+														onChange={e => setDeskripsi(e.target.value)}
+														type="deskripsi"
 														rows={3}
 														placeholder="Write your Group Description"
 													/>
 												</Form.Group>
-											</Form>
-											<Button
+												<Button
 												className="btn-createGroup"
-												variant="primary"
 												type="submit"
-												onClick={handleClose}
 											>
 												Create Group
 											</Button>
+											</form>
+											
 										</Modal.Body>
 										{/* <Modal.Footer className="D-flex justify-content-start">
 										
@@ -128,33 +170,36 @@ function Group() {
 									</Modal>
 								</div>
 							</div>
+							
 
+							{projects.map((project) => 
 							<div className="col-sm-12">
-								<div class="card w-100 my-2 mt-4">
+								<div class="card w-100 my-2 mt-4" key={project.ID}>
 									<div class="card-body">
 										<div className="row">
 											<div className="col-10">
-												<h4 class="card-title">Banking Social App</h4>
+												<h4 class="card-title">{project.title}</h4>
 												<div class="d-flex">
-													<div>Jumlah Anggota :</div>
-													<div class="text-right">15 Orang</div>
+													<div>Total Member : </div>
+													<div class="text-right">{project.sum_anggota}</div>
 												</div>
-												<p class="card-text">Deskripsi Group :</p>
+												<p class="card-text">Group Description :</p>
 												<div className="card-text">
 													<p>
-														Merupakan Grup Project Banking Social App, yang
-														dibuat dalam Rangka Meningkatkan Kepedulian Para
-														Penggiat Bank dalam Hubungan sosial Bermasyarakat
+														{project.deskripsi}
 													</p>
 												</div>
-												<button className="btn btn-createGroup">
-													Lihat Grup
-												</button>
+												<Link to="/DetailGroup">
+												<a button className="btn btn-createGroup">
+													Check Group
+												</a>
+												</Link>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+							)}
 						</div>
 					</div>
 				</div>
@@ -163,5 +208,6 @@ function Group() {
 		</>
 	);
 }
+
 
 export default Group;

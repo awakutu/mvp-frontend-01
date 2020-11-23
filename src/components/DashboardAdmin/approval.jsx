@@ -119,7 +119,7 @@ function DashboardAdmin() {
   
                 <main role="main" className="col-md-9 ml-sm-auto col-lg-9 px-4">
                   <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 className="text-primary font-weight-bold">Approval Management</h1>  
+                    <h1 className="text-primary font-weight-bold">Approval Users</h1>  
                   </div>
                   {/* <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
                     <h3 className="text-secondary font-weight-bold">Approval Management</h3>     
