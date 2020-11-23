@@ -140,21 +140,21 @@ function DetailGroup() {
 											<Modal.Body>
 												<Form>
 													<Form.Group controlId="formGroupName">
-														<Form.Label>Title Task</Form.Label>
+														<Form.Label className="font-weight-bold">Title Task</Form.Label>
 														<Form.Control
 															type="text"
 															placeholder="Type your Task Title"
 														/>
 													</Form.Group>
 													<Form.Group controlId="formGroupName">
-														<Form.Label>Assignee</Form.Label>
+														<Form.Label className="font-weight-bold">Assignee</Form.Label>
 														<Form.Control
 															type="text"
 															placeholder="Type the Assignee of the Task"
 														/>
 													</Form.Group>
 													<Form.Group controlId="formGroupName">
-														<Form.Label>Progress</Form.Label>
+														<Form.Label className="font-weight-bold">Progress</Form.Label>
 														<Form.Control as="select" defaultValue="Choose...">
 															<option>To Do</option>
 															<option>In Progress</option>
@@ -163,7 +163,7 @@ function DetailGroup() {
 													</Form.Group>
 
 													<Form.Group controlId="formGroupDesc">
-														<Form.Label>Task Description</Form.Label>
+														<Form.Label className="font-weight-bold">Task Description</Form.Label>
 														<Form.Control
 															as="textarea"
 															rows={3}
