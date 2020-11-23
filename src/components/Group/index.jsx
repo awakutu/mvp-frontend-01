@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import { removeUserSession } from '../../utils/Common';
-// import { useHistory } from 'react-router-dom';
+import { removeUserSession } from '../../utils/Common';
+import { useHistory } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getToken, getID, getUsername } from '../../utils/Common';
@@ -14,23 +14,23 @@ function Group() {
 	const [token, setToken] = useState(getToken());
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const [mode, setMode] = useState("view");
+	const [mode, setMode] = useState('view');
 	const [username, setUsername] = useState(getUsername());
 	const [title, setTitle] = useState('');
-	const [id_user, setId_user] = useState(+getID()); //menggunakan + utk mengubah tipe data string ke int 
+	const [id_user, setId_user] = useState(+getID()); //menggunakan + utk mengubah tipe data string ke int
 	const [deskripsi, setDeskripsi] = useState('');
 	const [projects, setProjects] = useState([]);
-	// const history = useHistory();
-	// const handleLogout = () => {
-	// 	removeUserSession();
-	// 	history.push('/Login');
-	// };
+	const history = useHistory();
+	const handleLogout = () => {
+		removeUserSession();
+		history.push('/Login');
+	};
 
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
 			'Access-Control-Allow-Origin': '*',
-			Authorization: `${token}`
+			Authorization: `${token}`,
 		},
 	};
 
@@ -44,9 +44,9 @@ function Group() {
 		e.preventDefault();
 		axios.post(
 			'http://3.15.137.94:8084/api/project',
-			{title, deskripsi, id_user, username},
+			{ title, deskripsi, id_user, username },
 			config
-		)
+		);
 		console.log('Berhasil Post');
 		handleClose();
 	}
@@ -68,45 +68,51 @@ function Group() {
 					<button className="btn btn-createGroup mx-4 my-4">
 						Create Group
 					</button>
-					<a href="/Profile">
+
+					<div className="dropdown">
 						<img className="img-dashboard mt-2" src={headerIMG} />
-					</a>
+						<div className="dropdown-content">
+							<a href="/Profile">Profile</a>
+							<a href="/Login" onClick={handleLogout} value="Login">
+								Logout
+							</a>
+						</div>
+					</div>
 				</div>
 			</header>
 			<main className="container-fluid">
 				<div className="row main-wrap ">
-					<div className="col-sm-3 left-Bar sticky-top">
-						<div className="d-flex">
-							<i className="fa fa-braille pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="/Dashboard">
-								<p className="pt-3 pl-2">Dashboard</p>
-							</a>
+					<nav className="col-md-3 d-none d-md-block sidebar">
+						<div className="sidebar-sticky">
+							<ul className="nav flex-column">
+								<li className="nav-item">
+									<a className="nav-link active" href="/Dashboard">
+										<i className="fa fa-dashboard pt-4" aria-hidden="true"></i>{' '}
+										Dashboard <span className="sr-only">(current)</span>
+									</a>
+								</li>
+						
+								<li className="nav-item">
+									<a className="nav-link" href="/Group">
+										<i className="fa fa-group pt-4" aria-hidden="true"></i>{' '}
+										Group
+									</a>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/Dashboard">
+										<i className="fa fa-file pt-4" aria-hidden="true"></i>{' '}
+										Portofolio
+									</a>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/Dashboard">
+										<i className="fa fa-star pt-4" aria-hidden="true"></i>{' '}
+										Innovation Showcase
+									</a>
+								</li>
+							</ul>
 						</div>
-						<div className="d-flex">
-							<i className="fa fa-suitcase pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="">
-								<p className="pt-3 pl-2">Projects</p>
-							</a>
-						</div>
-						<div className="d-flex">
-							<i className="fa fa-users pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="/Group">
-								<p className="pt-3 pl-2">Group</p>
-							</a>
-						</div>
-						<div className="d-flex">
-							<i className="fa fa-file pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="">
-								<p className="pt-3 pl-2">Portfolio</p>
-							</a>
-						</div>
-						<div className="d-flex">
-							<i className="fa fa-star pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="">
-								<p className="pt-3 pl-2">Innovation Showcase</p>
-							</a>
-						</div>
-					</div>
+					</nav>
 
 					<div className="col-sm-8">
 						<div className="row">
@@ -129,7 +135,7 @@ function Group() {
 											</Modal.Title>
 										</Modal.Header>
 										<Modal.Body>
-										<form onSubmit={handleAdd}>
+											<form onSubmit={handleAdd}>
 												<Form.Group controlId="formGroupName">
 													<Form.Label className="font-weight-bold">
 														Project Group Name
@@ -149,20 +155,16 @@ function Group() {
 													<Form.Control
 														as="textarea"
 														value={deskripsi}
-														onChange={e => setDeskripsi(e.target.value)}
+														onChange={(e) => setDeskripsi(e.target.value)}
 														type="deskripsi"
 														rows={3}
 														placeholder="Write your Group Description"
 													/>
 												</Form.Group>
-												<Button
-												className="btn-createGroup"
-												type="submit"
-											>
-												Create Group
-											</Button>
+												<Button className="btn-createGroup" type="submit">
+													Create Group
+												</Button>
 											</form>
-											
 										</Modal.Body>
 										{/* <Modal.Footer className="D-flex justify-content-start">
 										
@@ -170,36 +172,33 @@ function Group() {
 									</Modal>
 								</div>
 							</div>
-							
 
-							{projects.map((project) => 
-							<div className="col-sm-12">
-								<div class="card w-100 my-2 mt-4" key={project.ID}>
-									<div class="card-body">
-										<div className="row">
-											<div className="col-10">
-												<h4 class="card-title">{project.title}</h4>
-												<div class="d-flex">
-													<div>Total Member : </div>
-													<div class="text-right">{project.sum_anggota}</div>
+							{projects.map((project) => (
+								<div className="col-sm-12">
+									<div class="card w-100 my-2 mt-4" key={project.ID}>
+										<div class="card-body">
+											<div className="row">
+												<div className="col-10">
+													<h4 class="card-title">{project.title}</h4>
+													<div class="d-flex">
+														<div>Total Member : </div>
+														<div class="text-right">{project.sum_anggota}</div>
+													</div>
+													<p class="card-text">Group Description :</p>
+													<div className="card-text">
+														<p>{project.deskripsi}</p>
+													</div>
+													<Link to="/DetailGroup">
+														<a button className="btn btn-createGroup">
+															Check Group
+														</a>
+													</Link>
 												</div>
-												<p class="card-text">Group Description :</p>
-												<div className="card-text">
-													<p>
-														{project.deskripsi}
-													</p>
-												</div>
-												<Link to="/DetailGroup">
-												<a button className="btn btn-createGroup">
-													Check Group
-												</a>
-												</Link>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							)}
+							))}
 						</div>
 					</div>
 				</div>
@@ -208,6 +207,5 @@ function Group() {
 		</>
 	);
 }
-
 
 export default Group;
