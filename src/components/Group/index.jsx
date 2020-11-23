@@ -17,7 +17,7 @@ function Group() {
 	const [mode, setMode] = useState("view");
 	const [username, setUsername] = useState(getUsername());
 	const [title, setTitle] = useState('');
-	const [id_user, setIdUser] = useState(getID());
+	const [id_user, setId_user] = useState(+getID()); //menggunakan + utk mengubah tipe data string ke int 
 	const [deskripsi, setDeskripsi] = useState('');
 	const [projects, setProjects] = useState([]);
 	// const history = useHistory();
@@ -44,9 +44,9 @@ function Group() {
 		e.preventDefault();
 		axios.post(
 			'http://3.15.137.94:8084/api/project',
-			{ title, deskripsi, id_user, username },
+			{title, deskripsi, id_user, username},
 			config
-		);
+		)
 		console.log('Berhasil Post');
 		handleClose();
 	}
