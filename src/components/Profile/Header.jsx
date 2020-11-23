@@ -27,7 +27,8 @@ const Header = () => {
     .then((response) => {
         setUsername(response.data.data.Data.Username);
         setEmail(response.data.data.Data.email);
-        setFoto(response.data.data.Data.foto)
+        setFoto(null)
+        console.log(foto)
       })
       .catch((err) => {
         setError(err.message);
@@ -47,78 +48,6 @@ console.log(response.data.data.Data.[0].jenis_kategori);
         setLoading(true);
       });
   }, []);
-
-
- 
-   
-  // On file upload (click the upload button) 
-//  const  onFileUpload = () => { 
-   
-//     // Create an object of formData 
-//     const formData = new FormData(); 
-   
-//     // Update the formData object 
-//     formData.append( 
-//       "foto user", 
-//       foto, 
-//       foto.name 
-//     ); 
-   
-//     // Details of the uploaded file 
-//     console.log(this.state.selectedFile); 
-   
-//     // Request made to the backend api 
-//     // Send formData object 
-//     e.preventDefault();
-//     Axios.post(
-//       `http://3.15.137.94:8084/api/profile/${Username}/update`,
-//       {foto},
-//       config
-//     )
-//       .then((response) => {
-//         console.log("Berhasil Update");
-//       })
-//       .catch((err) => {
-//         setError(err.message);
-//         setLoading(true);
-//       });
-//     }
-  
-//     // On file select (from the pop up) 
-//     onFileChange = event => { 
-       
-//       // Update the state 
-//       this.setState({ selectedFile: event.target.files[0] }); 
-     
-//     };
-//   }; 
-   
-//   // File content to be displayed after 
-//   // file upload is complete 
-//   const fileData = () => { 
-   
-//     if (this.state.selectedFile) { 
-        
-//       return ( 
-//         <div> 
-//           <h2>File Details:</h2> 
-//           <p>File Name: {this.state.selectedFile.name}</p> 
-//           <p>File Type: {this.state.selectedFile.type}</p> 
-//           <p> 
-//             Last Modified:{" "} 
-//             {this.state.selectedFile.lastModifiedDate.toDateString()} 
-//           </p> 
-//         </div> 
-//       ); 
-//     } else { 
-//       return ( 
-//         <div> 
-//           <br /> 
-//           <h4>Choose before Pressing the Upload button</h4> 
-//         </div> 
-//       ); 
-//     } 
-//   }; 
 
   return (
     <>
