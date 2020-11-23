@@ -86,9 +86,18 @@ function Dashboard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  function deletePost(id_article,) {
+  function deletePost(id_article) {
     axios.post("http://3.15.137.94:8084/api/dashboard/delete",{ID : id_article}, config)
     handleClose();
+  }
+  
+  const [comment, setComment] = useState("");
+  const [commentshow, setCommentshow] = useState("false");
+  const handleClosecomment = () => setCommentshow("false");
+  const handleShowcomment = () => setCommentshow("true");
+  function handleComment(id_article) {
+    axios.post(`http://3.15.137.94:8084/api/comment/${id_article}`,{isi : comment, username : username}, config)
+    setComment("");
   }
 
   return (
@@ -338,13 +347,14 @@ function Dashboard() {
                     <img className="img-dashboard mt-2" src={headerIMG} />
                   </div>
                   <div className="col-10">
+                   
                     <div className="d-flex flex-row-reverse bd-highlight">
                       <div>
                         <button className="btn">
-                          <i className="fa fa-edit text-secondary"></i>
+                          <i className={(article.username === username) ? "fa fa-edit text-secondary":"fa fa-edit text-secondary invisible"}></i>
                         </button>
-                        <button className="btn" onClick={handleShow}>
-                          <i className="fa fa-trash text-secondary"></i>
+                        <button className="btn" onClick={(article.username === username) ? handleShow : null}>
+                          <i className={(article.username === username) ? "fa fa-trash text-secondary":"fa fa-trash text-secondary invisible"}></i>
                         </button>
                         </div>
                     </div>
@@ -391,11 +401,53 @@ function Dashboard() {
                       </button> */}
                       <button className="btn" onClick={() => handleLike(article.ID)}><i className="fa fa-thumbs-up" aria-hidden="true"> </i> </button>
                       <button className="btn" onClick={() => handleDislike(article.ID)}><i className="fa fa-thumbs-down" aria-hidden="true"> </i> </button>
-                      <button className="btn"><i className="fa fa-comment" aria-hidden="true"> </i></button>
+                      <button className="btn" onClick={(commentshow === "false")?handleShowcomment:handleClosecomment}><i className="fa fa-comment" aria-hidden="true"> </i></button>
                       
                       <button className="btn"><i className="fa fa-share" aria-hidden="true"></i></button>
                     </div>
                     <hr></hr>
+                    {commentshow === "false" ? null : (
+                    <div className="container">
+                      <h4 className="font-weight-bold">Comments</h4>
+                      {article.Comment.map((com) => 
+                      <div className="card w-100 my-2" key={com.ID}>
+                        <div className="card-body">
+                          <div className="row">
+                            <div className="col-md-3">
+                            {com.username}
+                            </div>
+                            <div className="col-md-9">
+                            {com.isi}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      )}
+                    
+                      <div className="card w-100 my-2">
+                        <div className="card-body bg-light">
+                          <div className="row">
+                                <div className="col-md-3">
+                                {username}
+                                </div>
+                                <div className="col-md-9">
+                                
+                                  <FormGroup controlId="comment">
+                                    <FormControl
+                                      type="comment"
+                                      value={comment}
+                                      onChange={e => setComment(e.target.value)}
+                                      placeholder="Comment"
+                                    />
+                                  </FormGroup>
+                                  <Button onClick={() => handleComment(article.ID)} className="btn btn-md btn-color font-weight-bold my-3 pull-right" type="submit">Comment</Button>
+                                
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
