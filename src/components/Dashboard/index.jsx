@@ -140,12 +140,7 @@ function Dashboard() {
                 {" "}Dashboard <span className="sr-only">(current)</span>
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/Dashboard">
-                <i className="fa fa-suitcase pt-4" aria-hidden="true"></i>
-                {" "}Project
-                </a>
-              </li>
+ 
               <li className="nav-item">
                 <a className="nav-link" href="/Group">
                 <i className="fa fa-group pt-4" aria-hidden="true"></i>
@@ -223,7 +218,7 @@ function Dashboard() {
             <div className="d-flex justify-content-between">
               <h4 className="mt-2">All Categories</h4>
               <button
-                className={(mode==="view")?"btn btn-md btn-primary mx-3 my-3":"btn btn-md btn-danger mx-3 my-3"}
+                className={(mode==="view")?"btn btn-md btn-createGroup mx-3 my-3":"btn btn-md btn-danger mx-3 my-3"}
                 onClick={mode === "view" ? handleCancel : handleAddPost}
               >
                 {(mode==="view")?"Create Post":"Cancel"}
