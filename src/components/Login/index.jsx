@@ -8,6 +8,11 @@ import twitter from '../../assets/twitter.png';
 import { setUserSession } from '../../utils/Common';
 import API from "../../services/MVP-Api";
 import "./style.css";
+import LoginGoogle from "../LoginGoogle/loginGoogle"
+import LogoutGoogle from "../LoginGoogle/logoutGoogle"
+import { useGoogleLogin, useGoogleLogout } from 'react-google-login';
+import { refreshTokenSetup } from '../../utils/refreshToken';
+import axios from "axios";
 
 function Login() {
   const [Username, setUsername] = useState("");
@@ -15,6 +20,53 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+
+  //Login Google
+  const clientId =
+  '913465578188-hai5duusvj9f2h6fv8do8hp79tkpqi5q.apps.googleusercontent.com';
+
+  const Success = (res) => {
+    console.log('Login Success: currentUser:', res.profileObj);
+    console.log('Login Success: token:', res); 
+    // axios.post('http://3.15.137.94:8084/api/login', res.profileObj.email);
+    console.log("Success");
+    console.log(res);
+    refreshTokenSetup(res);
+    // history.push('/PrefCategory');
+  };
+
+  const Failure = (res) => {
+    console.log('Login failed: res:', res);
+    alert(
+      `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
+    );
+  };
+
+  const { signIn } = useGoogleLogin({
+      Success,
+      Failure,
+      clientId,
+      isSignedIn: true,
+      accessType: 'offline',
+      // responseType: 'code',
+      // prompt: 'consent',
+  });
+
+  //Logout google
+  const onLogoutSuccess = (res) => {
+    console.log('Logged out Success');
+    alert('Logged out Successfully ✌');
+  };
+
+  const onFailure = () => {
+    console.log('Handle failure cases');
+  };
+
+  const { signOut } = useGoogleLogout({
+    clientId,
+    onLogoutSuccess,
+    onFailure,
+  });
 
   function onSubmit(e) {
     e.preventDefault();
@@ -90,7 +142,7 @@ function Login() {
                   </div>
                   
                 <Button className="btn btn-lg btn-color btn-block font-weight-bold my-3" type="submit">Login</Button>
-                  
+                </form>
                   
                   <div className="text-center">
                     <h5 className="text-center">Dont't have an account?<a href="/Register"> Register</a></h5>
@@ -103,14 +155,22 @@ function Login() {
                     <a href="/register">
                         <Image className="img-fluid mx-2" src={fb}></Image>
                     </a>
-                    <a href="/register">
+                    {/* <button onClick={()=> signIn}>
                         <Image className="img-fluid mx-2" src={google}></Image>
-                    </a>
+                    </button> */}
+                   
                     <a href="/register">
                         <Image className="img-fluid mx-2" src={twitter}></Image>
                     </a>
+                    <LoginGoogle/>
+                    <LogoutGoogle/>
+                    {/* <button onClick={() => signOut}>
+                      
+
+                      <span className="buttonText">Sign out</span>
+                    </button> */}
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
