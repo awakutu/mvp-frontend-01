@@ -1,7 +1,7 @@
 # Contributors
 
-- [Sun Win Christofer](@zxaenalios )
-- [Rizky Tri Sulistyo](https://gitlab.com/awakutu)
+- [Sun Win Christofer](https://github.com/sunwinfe )
+- [Rizky Tri Sulistyo](https://github.com/awakutu)
 - [Muadz Nurhaqqi](https://gitlab.com/mmikasaa1)
-- [Ali Imron](https://gitlab.com/zxaenalios)
+- [Ali Imron](https://github.com/zxaenalios)
 - [Muhammad Ali Ikhsanuddin](https://gitlab.com/ikhsanudin902020)
