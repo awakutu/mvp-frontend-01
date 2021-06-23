@@ -1,0 +1,13 @@
+@media all and (min-width: 480px) {
+    
+.btn-color {
+    background-color: #096AAF;
+  }
+
+.btn-trans{
+    background-color: transparent;
+  }
+.nopadding {
+  padding: 0rem;
+}
+}
