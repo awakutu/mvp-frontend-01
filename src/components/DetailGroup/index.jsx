@@ -36,45 +36,50 @@ function DetailGroup() {
 					<button className="btn btn-createGroup mx-4 my-4">
 						Create Group
 					</button>
-					<a href="/Profile">
+
+					<div className="dropdown">
 						<img className="img-dashboard mt-2" src={headerIMG} />
-					</a>
+						<div className="dropdown-content">
+							<a href="/Profile">Profile</a>
+							<a href="/Login" onClick={handleLogout} value="Login">
+								Logout
+							</a>
+						</div>
+					</div>
 				</div>
 			</header>
 			<main className="container-fluid">
 				<div className="row main-wrap ">
-					<div className="col-sm-3 left-Bar sticky-top">
-						<div className="d-flex">
-							<i className="fa fa-braille pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="/Dashboard">
-								<p className="pt-3 pl-2">Dashboard</p>
-							</a>
+					<nav className="col-md-3 d-none d-md-block sidebar">
+						<div className="sidebar-sticky">
+							<ul className="nav flex-column">
+								<li className="nav-item">
+									<a className="nav-link active" href="/Dashboard">
+										<i className="fa fa-dashboard pt-4" aria-hidden="true"></i>{' '}
+										Dashboard <span className="sr-only">(current)</span>
+									</a>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/Group">
+										<i className="fa fa-group pt-4" aria-hidden="true"></i>{' '}
+										Group
+									</a>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/Dashboard">
+										<i className="fa fa-file pt-4" aria-hidden="true"></i>{' '}
+										Portofolio
+									</a>
+								</li>
+								<li className="nav-item">
+									<a className="nav-link" href="/Dashboard">
+										<i className="fa fa-star pt-4" aria-hidden="true"></i>{' '}
+										Innovation Showcase
+									</a>
+								</li>
+							</ul>
 						</div>
-						<div className="d-flex">
-							<i className="fa fa-suitcase pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="">
-								<p className="pt-3 pl-2">Projects</p>
-							</a>
-						</div>
-						<div className="d-flex">
-							<i className="fa fa-users pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="/Group">
-								<p className="pt-3 pl-2">Group</p>
-							</a>
-						</div>
-						<div className="d-flex">
-							<i className="fa fa-file pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="">
-								<p className="pt-3 pl-2">Portfolio</p>
-							</a>
-						</div>
-						<div className="d-flex">
-							<i className="fa fa-star pt-4" aria-hidden="true"></i>
-							<a className="text-secondary" href="">
-								<p className="pt-3 pl-2">Innovation Showcase</p>
-							</a>
-						</div>
-					</div>
+					</nav>
 
 					<div className="col-sm-9">
 						<div className="row">
