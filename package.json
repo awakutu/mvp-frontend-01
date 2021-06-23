@@ -18,10 +18,10 @@
     "turbolinks": "^5.2.0",
     "axios": "^0.21.0",
     "react-bootstrap": "^1.4.0"
-    },
-    "devDependencies": {
-        "webpack-dev-server": "^3.11.0"
-    },
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
